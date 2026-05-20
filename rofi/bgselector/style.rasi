@@ -106,11 +106,11 @@ mainbox {
 listview {
     padding: 20px;
     spacing: 12px;                       // slightly looser spacing between thumbs
-    columns: 7;
-    lines: 1;
+    columns: 6;
+    lines: 2;
     flow: horizontal;
     fixed-height: true;
-    scrollbar: false;
+    scrollbar: true;
     cycle: true;
     border: 0px;
     separator: none;
@@ -135,7 +135,7 @@ element.selected {
 }
 
 element-icon {
-    size: 330px 509px;                   // slightly refined proportions
+    size: 250px 400px;                   // slightly refined proportions
     horizontal-align: 0.5;
     vertical-align: 0.5;
     background-color: #000000;
