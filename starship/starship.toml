@@ -35,7 +35,7 @@ vimcmd_symbol ="[](bold green)"
 
 # Username display
 [username]
-format = "[$user]($style)"
+format = "[Leleh@]($style)"
 disabled = false
 show_always = true
 
