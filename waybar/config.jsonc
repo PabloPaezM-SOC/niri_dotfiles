@@ -9,15 +9,19 @@
   "margin-right": 0,
   "spacing": 0,
   "include": ["~/.config/waybar/modules.json"],
-  "modules-left": ["custom/cachy", "clock", "cpu"],
+  "modules-left": [/*"custom/cachy",*/ "clock", "cpu","memory"],
   "modules-center": ["mpris", "niri/workspaces", "privacy"],
   "modules-right": [
-    "group/extras",
-    "network",
-    "bluetooth",
-    "pulseaudio#microphone",
+    "tray",
+    //"group/extras",
+    "custom/menu",
+    //"network",
+    //"bluetooth",
+    //"pulseaudio#microphone",
     "group/audio",
     "group/brightness",
-    "battery"
+    "battery",
+    "custom/swaync",
+    "custom/powermenu"
   ]
 }

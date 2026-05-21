@@ -44,7 +44,7 @@ else
     local missing_deps=()
 
     for dep in "${required_deps[@]}"; do
-      command -v "$dep" > /dev/null 2>&1 || missing_deps+=("$dep")
+      command -v "$dep" >/dev/null 2>&1 || missing_deps+=("$dep")
     done
 
     if [[ ${#missing_deps[@]} -gt 0 ]]; then
@@ -66,77 +66,77 @@ map_to_gtk_theme() {
   local variation="$2"
 
   case "${theme_name}" in
-    "catppuccin")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Light-Catppuccin"
-      else
-        echo "Colloid-Dark-Catppuccin"
-      fi
-      ;;
-    "dracula")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Light-Dracula"
-      else
-        echo "Colloid-Dark-Dracula"
-      fi
-      ;;
-    "everforest")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Light-Everforest"
-      else
-        echo "Colloid-Dark-Everforest"
-      fi
-      ;;
-    "gruvbox")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Light-Gruvbox"
-      else
-        echo "Colloid-Dark-Gruvbox"
-      fi
-      ;;
-    "material")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Light"
-      else
-        echo "Colloid-Grey-Dark"
-      fi
-      ;;
-    "nord")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Light-Nord"
-      else
-        echo "Colloid-Dark-Nord"
-      fi
-      ;;
-    "solarized")
-      if [[ "$variation" == "light" ]]; then
-        echo "Osaka-Light-Solarized"
-      else
-        echo "Osaka-Dark-Solarized"
-      fi
-      ;;
-    "rose-pine")
-      if [[ "$variation" == "light" ]]; then
-        echo "Rosepine-Light"
-      else
-        echo "Rosepine-Dark"
-      fi
-      ;;
-    "tokyo-night")
-      if [[ "$variation" == "light" ]]; then
-        echo "Tokyonight-Light"
-      else
-        echo "Tokyonight-Dark"
-      fi
-      ;;
-    *)
-      log_warn "Unknown theme: $theme_name, using default theme"
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Light"
-      else
-        echo "Colloid-Dark"
-      fi
-      ;;
+  "catppuccin")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Light-Catppuccin"
+    else
+      echo "Colloid-Dark-Catppuccin"
+    fi
+    ;;
+  "dracula")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Light-Dracula"
+    else
+      echo "Colloid-Dark-Dracula"
+    fi
+    ;;
+  "everforest")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Light-Everforest"
+    else
+      echo "Colloid-Dark-Everforest"
+    fi
+    ;;
+  "gruvbox")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Light-Gruvbox"
+    else
+      echo "Colloid-Dark-Gruvbox"
+    fi
+    ;;
+  "material")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Light"
+    else
+      echo "Colloid-Grey-Dark"
+    fi
+    ;;
+  "nord")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Light-Nord"
+    else
+      echo "Colloid-Dark-Nord"
+    fi
+    ;;
+  "solarized")
+    if [[ "$variation" == "light" ]]; then
+      echo "Osaka-Light-Solarized"
+    else
+      echo "Osaka-Dark-Solarized"
+    fi
+    ;;
+  "rose-pine")
+    if [[ "$variation" == "light" ]]; then
+      echo "Rosepine-Light"
+    else
+      echo "Rosepine-Dark"
+    fi
+    ;;
+  "tokyo-night")
+    if [[ "$variation" == "light" ]]; then
+      echo "Tokyonight-Light"
+    else
+      echo "Tokyonight-Dark"
+    fi
+    ;;
+  *)
+    log_warn "Unknown theme: $theme_name, using default theme"
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Light"
+    else
+      echo "Colloid-Dark"
+    fi
+    ;;
   esac
 }
 
@@ -145,73 +145,73 @@ map_to_icon_theme() {
   local variation="$2"
 
   case "${theme_name}" in
-    "catppuccin")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Catppuccin-Light"
-      else
-        echo "Colloid-Catppuccin-Dark"
-      fi
-      ;;
-    "dracula")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Dracula-Light"
-      else
-        echo "Colloid-Dracula-Dark"
-      fi
-      ;;
-    "everforest")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Everforest-Light"
-      else
-        echo "Colloid-Everforest-Dark"
-      fi
-      ;;
-    "gruvbox")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Gruvbox-Light"
-      else
-        echo "Colloid-Gruvbox-Dark"
-      fi
-      ;;
-    "material")
-      # Base colloid-dark for material as requested
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Light"
-      else
-        echo "Colloid-Dark"
-      fi
-      ;;
-    "nord")
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Nord-Light"
-      else
-        echo "Colloid-Nord-Dark"
-      fi
-      ;;
-    "solarized")
-      # everforest for osaka (solarized) as requested
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Everforest-Light"
-      else
-        echo "Colloid-Everforest-Dark"
-      fi
-      ;;
-    "rose-pine" | "tokyo-night")
-      # catppuccin for rose-pine and tokyo-night as requested
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Catppuccin-Light"
-      else
-        echo "Colloid-Catppuccin-Dark"
-      fi
-      ;;
-    *)
-      log_warn "Unknown theme: $theme_name, using default icon theme"
-      if [[ "$variation" == "light" ]]; then
-        echo "Colloid-Light"
-      else
-        echo "Colloid-Dark"
-      fi
-      ;;
+  "catppuccin")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Catppuccin-Light"
+    else
+      echo "Colloid-Catppuccin-Dark"
+    fi
+    ;;
+  "dracula")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Dracula-Light"
+    else
+      echo "Colloid-Dracula-Dark"
+    fi
+    ;;
+  "everforest")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Everforest-Light"
+    else
+      echo "Colloid-Everforest-Dark"
+    fi
+    ;;
+  "gruvbox")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Gruvbox-Light"
+    else
+      echo "Colloid-Gruvbox-Dark"
+    fi
+    ;;
+  "material")
+    # Base colloid-dark for material as requested
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Light"
+    else
+      echo "Colloid-Dark"
+    fi
+    ;;
+  "nord")
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Nord-Light"
+    else
+      echo "Colloid-Nord-Dark"
+    fi
+    ;;
+  "solarized")
+    # everforest for osaka (solarized) as requested
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Everforest-Light"
+    else
+      echo "Colloid-Everforest-Dark"
+    fi
+    ;;
+  "rose-pine" | "tokyo-night")
+    # catppuccin for rose-pine and tokyo-night as requested
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Catppuccin-Light"
+    else
+      echo "Colloid-Catppuccin-Dark"
+    fi
+    ;;
+  *)
+    log_warn "Unknown theme: $theme_name, using default icon theme"
+    if [[ "$variation" == "light" ]]; then
+      echo "Colloid-Light"
+    else
+      echo "Colloid-Dark"
+    fi
+    ;;
   esac
 }
 
@@ -220,73 +220,73 @@ map_to_wallust_theme() {
   local variation="$2"
 
   case "${theme_name}" in
-    "catppuccin")
-      if [[ "$variation" == "light" ]]; then
-        echo "Catppuccin-Latte"
-      else
-        echo "Catppuccin-Mocha"
-      fi
-      ;;
-    "dracula")
-      if [[ "$variation" == "light" ]]; then
-        echo "base16-default-light"
-      else
-        echo "base16-dracula"
-      fi
-      ;;
-    "everforest")
-      if [[ "$variation" == "light" ]]; then
-        echo "Everforest-Light-Medium"
-      else
-        echo "Everforest-Dark-Medium"
-      fi
-      ;;
-    "gruvbox")
-      if [[ "$variation" == "light" ]]; then
-        echo "Gruvbox"
-      else
-        echo "Gruvbox-Dark"
-      fi
-      ;;
-    "material")
-      if [[ "$variation" == "light" ]]; then
-        echo "base16-default-light"
-      else
-        echo "base16-black-metal-funeral"
-      fi
-      ;;
-    "nord")
-      if [[ "$variation" == "light" ]]; then
-        echo "Nord-Light"
-      else
-        echo "Nord"
-      fi
-      ;;
-    "solarized")
-      if [[ "$variation" == "light" ]]; then
-        echo "Solarized-Light"
-      else
-        echo "Solarized-Dark"
-      fi
-      ;;
-    "rose-pine")
-      if [[ "$variation" == "light" ]]; then
-        echo "Rosé-Pine-Dawn"
-      else
-        echo "Rosé-Pine"
-      fi
-      ;;
-    "tokyo-night")
-      if [[ "$variation" == "light" ]]; then
-        echo "Tokyo-Night-Light"
-      else
-        echo "Tokyo-Night"
-      fi
-      ;;
-    *)
-      log_warn "Unknown theme: $theme_name, using random theme"
-      echo "random"
-      ;;
+  "catppuccin")
+    if [[ "$variation" == "light" ]]; then
+      echo "Catppuccin-Latte"
+    else
+      echo "Catppuccin-Mocha"
+    fi
+    ;;
+  "dracula")
+    if [[ "$variation" == "light" ]]; then
+      echo "base16-default-light"
+    else
+      echo "base16-dracula"
+    fi
+    ;;
+  "everforest")
+    if [[ "$variation" == "light" ]]; then
+      echo "Everforest-Light-Medium"
+    else
+      echo "Everforest-Dark-Medium"
+    fi
+    ;;
+  "gruvbox")
+    if [[ "$variation" == "light" ]]; then
+      echo "Gruvbox"
+    else
+      echo "Gruvbox-Dark"
+    fi
+    ;;
+  "material")
+    if [[ "$variation" == "light" ]]; then
+      echo "base16-default-light"
+    else
+      echo "base16-black-metal-funeral"
+    fi
+    ;;
+  "nord")
+    if [[ "$variation" == "light" ]]; then
+      echo "Nord-Light"
+    else
+      echo "Nord"
+    fi
+    ;;
+  "solarized")
+    if [[ "$variation" == "light" ]]; then
+      echo "Solarized-Light"
+    else
+      echo "Solarized-Dark"
+    fi
+    ;;
+  "rose-pine")
+    if [[ "$variation" == "light" ]]; then
+      echo "Rosé-Pine-Dawn"
+    else
+      echo "Rosé-Pine"
+    fi
+    ;;
+  "tokyo-night")
+    if [[ "$variation" == "light" ]]; then
+      echo "Tokyo-Night-Light"
+    else
+      echo "Tokyo-Night"
+    fi
+    ;;
+  *)
+    log_warn "Unknown theme: $theme_name, using random theme"
+    echo "random"
+    ;;
   esac
 }
 
@@ -296,7 +296,7 @@ detect_theme_from_wallpaper() {
   log_info "Detecting theme from current wallpaper directory"
 
   local wallpaper_path
-  wallpaper_path=$(awww query 2> /dev/null | grep -oP '(?<=image: ).*' | head -n1 | tr -d '\n\r')
+  wallpaper_path=$(awww query 2>/dev/null | grep -oP '(?<=image: ).*' | head -n1 | tr -d '\n\r')
 
   if [[ -z "$wallpaper_path" ]]; then
     die "No wallpaper detected from awww query"
@@ -345,7 +345,7 @@ check_theme_changed() {
   fi
 
   local previous_theme previous_variation
-  read -r previous_theme previous_variation < "$THEME_STATE_FILE"
+  read -r previous_theme previous_variation <"$THEME_STATE_FILE"
 
   if [[ "$current_theme" == "$previous_theme" && "$current_variation" == "$previous_variation" ]]; then
     log_info "Theme unchanged: $current_theme ($current_variation)"
@@ -361,7 +361,7 @@ save_theme_state() {
   local -r variation="$2"
 
   mkdir -p "$(dirname "$THEME_STATE_FILE")"
-  echo "$theme $variation" > "$THEME_STATE_FILE"
+  echo "$theme $variation" >"$THEME_STATE_FILE"
   log_info "Saved theme state: $theme ($variation)"
 }
 
@@ -381,7 +381,7 @@ set_ini_value() {
       sed -i "/^\\[$section\\]/a $key=$value" "$file"
     fi
   else
-    printf '\\n[%s]\\n%s=%s\\n' "$section" "$key" "$value" >> "$file"
+    printf '\\n[%s]\\n%s=%s\\n' "$section" "$key" "$value" >>"$file"
   fi
 }
 
@@ -416,9 +416,9 @@ update_xsettingsd() {
   if [[ ! -f "$config_file" ]]; then
     printf 'Net/ThemeName "%s"
 Net/IconThemeName "%s"
-' "$theme" "$icon_theme" > "$config_file"
+' "$theme" "$icon_theme" >"$config_file"
   else
-    sed -i "s/Net\/ThemeName \".*\"/Net\/ThemeName \"$theme\"/; s/Net\/IconThemeName \".*\"/Net\/IconThemeName \"$icon_theme\"/" "$config_file" 2> /dev/null ||
+    sed -i "s/Net\/ThemeName \".*\"/Net\/ThemeName \"$theme\"/; s/Net\/IconThemeName \".*\"/Net\/IconThemeName \"$icon_theme\"/" "$config_file" 2>/dev/null ||
       log_warn "Failed to update xsettingsd config for theme name"
   fi
 }
@@ -428,30 +428,30 @@ update_gtk_settings() {
   local -r variation="$2"
 
   # Set the GTK theme using gsettings
-  gsettings set org.gnome.desktop.interface gtk-theme "$gtk_theme" 2> /dev/null || {
+  gsettings set org.gnome.desktop.interface gtk-theme "$gtk_theme" 2>/dev/null || {
     log_warn "Failed to set GTK theme via gsettings, may not be available"
   }
 
   # Set color scheme based on variation
   if [[ "$variation" == "light" ]]; then
-    gsettings set org.gnome.desktop.interface color-scheme "prefer-light" 2> /dev/null || {
+    gsettings set org.gnome.desktop.interface color-scheme "prefer-light" 2>/dev/null || {
       log_warn "Failed to set light color scheme via gsettings"
     }
   else
-    gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2> /dev/null || {
+    gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2>/dev/null || {
       log_warn "Failed to set dark color scheme via gsettings"
     }
   fi
 
   # Force reload of GTK settings for running applications
-  if command -v dbus-send > /dev/null 2>&1; then
+  if command -v dbus-send >/dev/null 2>&1; then
     dbus-send --session --dest=org.gtk.Settings --type=method_call \
-      /org/gtk/Settings org.gtk.Settings.NotifyThemeChange 2> /dev/null || true
+      /org/gtk/Settings org.gtk.Settings.NotifyThemeChange 2>/dev/null || true
   fi
 
   # Reload xsettingsd if running
-  if command -v pgrep > /dev/null 2>&1 && command -v pkill > /dev/null 2>&1; then
-    if pgrep -x xsettingsd > /dev/null; then
+  if command -v pgrep >/dev/null 2>&1 && command -v pkill >/dev/null 2>&1; then
+    if pgrep -x xsettingsd >/dev/null; then
       pkill -HUP xsettingsd
     fi
   else
@@ -581,7 +581,7 @@ run_wallust_theme() {
   if [[ "$wallust_theme" == "random" ]]; then
     # Just run wallust on the wallpaper without a specific theme if unknown
     log_info "Running wallust in auto mode for: $wallpaper_path"
-    if ! wallust run "$wallpaper_path" --dynamic-threshold 2> /dev/null; then
+    if ! wallust run "$wallpaper_path" --dynamic-threshold 2>/dev/null; then
       log_warn "Wallust theme generation failed, continuing..."
     else
       log_success "Wallust theme generation completed"
@@ -589,10 +589,10 @@ run_wallust_theme() {
   else
     # Try to apply the specific theme if available
     log_info "Applying specific wallust theme: $wallust_theme"
-    if ! wallust theme "$wallust_theme" 2> /dev/null; then
+    if ! wallust theme "$wallust_theme" 2>/dev/null; then
       log_warn "Specific wallust theme failed, falling back to auto-generation for: $wallpaper_path"
       # Fallback to running wallust on the wallpaper directly
-      if ! wallust run "$wallpaper_path" --dynamic-threshold 2> /dev/null; then
+      if ! wallust run "$wallpaper_path" --dynamic-threshold 2>/dev/null; then
         log_warn "Wallust generation failed completely, continuing..."
       else
         log_success "Wallust fallback theme generation completed"
@@ -615,6 +615,9 @@ update_niri_config() {
   local background_color
   background_color=$(jq -r '.special.background' "$wallust_colors_file")
 
+  local ring_color
+  ring_color=$(jq -r '.special.foreground' "$wallust_colors_file")
+
   if [[ -z "$background_color" ]]; then
     log_warn "Could not extract background color from wallust cache"
     return
@@ -623,9 +626,13 @@ update_niri_config() {
   log_info "Updating niri config with background color: $background_color"
 
   # Only change active-color within the focus-ring block
-  sed -i "/focus-ring {/,/}/ s/active-color \".*\"/active-color \"$background_color\"/" "$niri_config_file"
+  sed -i "/focus-ring {/,/}/ s/active-color \".*\"/active-color \"$ring_color\"/" "$niri_config_file"
   # Only change color within the insert-hint block
   sed -i "/insert-hint {/,/}/ s/color \".*\"/color \"$background_color\"/" "$niri_config_file"
+
+  sed -i "/border {/,/}/ s/active-color \".*\"/active-color \"$ring_color\"/" "$niri_config_file"
+
+  sed -i "/border {/,/}/ s/inactive-color \".*\"/inactive-color \"$ring_color\"/" "$niri_config_file"
 
   log_success "Niri config updated successfully"
 }
@@ -706,14 +713,14 @@ main() {
     update_niri_config
     update_vscode_theme
 
-    if command -v vicinae > /dev/null 2>&1; then
+    if command -v vicinae >/dev/null 2>&1; then
       vicinae theme set wallust || log_warn "Failed to set vicinae theme"
     else
       log_warn "vicinae not found, skipping vicinae theme update"
     fi
 
-    if command -v makoctl > /dev/null 2>&1; then
-      makoctl reload 2> /dev/null || log_warn "Failed to reload mako"
+    if command -v makoctl >/dev/null 2>&1; then
+      makoctl reload 2>/dev/null || log_warn "Failed to reload mako"
     else
       log_warn "makoctl not available, skipping notification daemon reload"
     fi
@@ -731,4 +738,3 @@ main() {
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   main "$@"
 fi
-

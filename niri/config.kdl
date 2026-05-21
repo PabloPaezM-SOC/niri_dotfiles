@@ -3,11 +3,12 @@ spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 spawn-at-startup "awww-daemon"
 spawn-at-startup "waybar"
 spawn-at-startup "sh" "-c" "vicinae server &"
+spawn-at-startup "swaync"
+spawn-at-startup "xwayland-satellite"
 
 // General Settings
 prefer-no-csd
-screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
-
+screenshot-path "~/Imágenes/Screenshots/%Y-%m-%d %H-%M-%S.png"
 output "eDP-1" {
     mode "1920x1080@60.024"
     scale 1
@@ -17,18 +18,20 @@ input {
     keyboard {
         xkb {
             layout "es"
-            
+
         }
     }
-
-    touchpad {
-        tap
-        natural-scroll
-    }
-
-    focus-follows-mouse
+    //focus-follows-mouse
     workspace-auto-back-and-forth
 }
+
+gestures {
+  hot-corners {
+    off
+  }
+}
+
+
 
 hotkey-overlay {
     skip-at-startup
@@ -53,17 +56,15 @@ layer-rule {
 
 binds {
     // Shortcuts Panel
-    MOD+SHIFT+ESCAPE                    { show-hotkey-overlay; }
+    MOD+SHIFT+ESCAPE                  { show-hotkey-overlay; }
 
     // Application Shortcuts
-    MOD+RETURN                          hotkey-overlay-title="Open Terminal: alacritty" { spawn-sh "alacritty"; }
-    MOD+ALT+RETURN                      hotkey-overlay-title="Open Terminal: kitty" { spawn-sh "kitty"; }
-    MOD+ALT+B                         hotkey-overlay-title="Open Secondary Browser: chrome" { spawn-sh "google-chrome-stable --enable-features=TouchpadOverscrollHistoryNavigation"; }
+    MOD+T                               hotkey-overlay-title="Open Terminal: kitty" { spawn-sh "kitty"; }
     MOD+SHIFT+Q                         hotkey-overlay-title="Lock Screen: gtklock" { spawn-sh "gtklock"; }
-    MOD+A                               hotkey-overlay-title="Open App Launcher: vicinae" { spawn-sh "vicinae toggle"; }
-    MOD+B                               hotkey-overlay-title="Open Browser: firefox" { spawn-sh "firefox-developer-edition"; }
-    MOD+E                               hotkey-overlay-title="File Manager: Thunar" { spawn-sh "thunar"; }
-    MOD+ALT+E                           hotkey-overlay-title="File Manager: Yazi" { spawn-sh "yazi"; }
+    MOD+SPACE                           hotkey-overlay-title="Open App Launcher: vicinae" { spawn-sh "vicinae toggle"; }
+    MOD+B                               hotkey-overlay-title="Open Browser: zen" { spawn-sh "zen-browser"; }
+    MOD+SHIFT+E                         hotkey-overlay-title="File Manager: Thunar" { spawn-sh "DISPLAY=:2 thunar"; }
+    MOD+E                               hotkey-overlay-title="File Manager: Yazi" { spawn-sh "kitty yazi"; }
     MOD+W                               hotkey-overlay-title="Open Wallpaper Selector" { spawn-sh "$HOME/.config/scripts/bgselector.sh"; }
 
     // Media Keys
@@ -87,14 +88,14 @@ binds {
     MOD+L                               { focus-column-right; }
 
     MOD+LEFT                            { focus-column-left; }
-    MOD+DOWN                            { focus-window-down; }
-    MOD+UP                              { focus-window-up; }
+    MOD+DOWN                            { focus-workspace-down; }
+    MOD+UP                              { focus-workspace-up; }
     MOD+RIGHT                           { focus-column-right; }
 
     // Move windows within workspace
     MOD+SHIFT+LEFT                      { move-column-left; }
-    MOD+SHIFT+DOWN                      { move-window-down; }
-    MOD+SHIFT+UP                        { move-window-up; }
+    MOD+SHIFT+DOWN                      { move-column-to-workspace-down; }
+    MOD+SHIFT+UP                        { move-column-to-workspace-up; }
     MOD+SHIFT+RIGHT                     { move-column-right; }
 
     MOD+SHIFT+H                         { move-column-left; }
@@ -132,7 +133,7 @@ binds {
     MOD+SHIFT+CTRL+J                    { move-column-to-monitor-down; }
 
     // Workspace Management
-    MOD+ESCAPE                          hotkey-overlay-title="Open Overview" repeat=false { toggle-overview; }
+    MOD+TAB                          hotkey-overlay-title="Open Overview" repeat=false { toggle-overview; }
     MOD+WHEELSCROLLDOWN                 cooldown-ms=100 { focus-workspace-down; }
     MOD+WHEELSCROLLUP                   cooldown-ms=100 { focus-workspace-up; }
 
@@ -143,8 +144,8 @@ binds {
     // Column navigation with mouse
     MOD+WHEELSCROLLRIGHT                { focus-column-right; }
     MOD+WHEELSCROLLLEFT                 { focus-column-left; }
-    MOD+CTRL+WHEELSCROLLRIGHT           { move-column-right; }
-    MOD+CTRL+WHEELSCROLLLEFT            { move-column-left; }
+    MOD+SHIFT+WHEELSCROLLRIGHT           { move-column-right; }
+    MOD+SHIFT+WHEELSCROLLLEFT            { move-column-left; }
 
     // Numbered Workspaces
     MOD+1                               { focus-workspace 1; }
@@ -168,25 +169,25 @@ binds {
     MOD+SHIFT+8                         { move-column-to-workspace 8; }
     MOD+SHIFT+9                         { move-column-to-workspace 9; }
 
-    MOD+TAB                             { focus-workspace-previous; }
+    //MOD+TAB                             { focus-workspace-previous; }
 
     // Layout Controls
     MOD+C                               { center-column; }
-    MOD+CTRL+C                          { center-visible-columns; }
+    MOD+SHIFT+C                          { center-visible-columns; }
     MOD+BRACKETLEFT                     { set-column-width "-10%"; }
     MOD+BRACKETRIGHT                    { set-column-width "+10%"; }
     MOD+SHIFT+BRACKETLEFT               { set-window-height "-10%"; }
     MOD+SHIFT+BRACKETRIGHT              { set-window-height "+10%"; }
 
     // Window resizing with mouse
-    MOD+CTRL+WHEELSCROLLDOWN            { set-window-height "-5%"; }
-    MOD+CTRL+WHEELSCROLLUP              { set-window-height "+5%"; }
+    // MOD+CTRL+WHEELSCROLLDOWN            { set-window-height "-5%"; }
+    // MOD+CTRL+WHEELSCROLLUP              { set-window-height "+5%"; }
 
     // Window Modes
-    MOD+T                               { toggle-window-floating; }
-    MOD+F                               { fullscreen-window; }
+    MOD+F                               { toggle-window-floating; }
+    //MOD+F                             { fullscreen-window; }
     MOD+M                               { maximize-column; }
-    // MOD+W                               { toggle-column-tabbed-display; }
+    MOD+O                               { toggle-column-tabbed-display; }
 
     // Utils
     MOD+S                               { screenshot; }
@@ -197,14 +198,21 @@ binds {
     // Application Restarts
     MOD+ALT+W                           { spawn "sh" "-c" "pgrep -x waybar >/dev/null && killall waybar || waybar &"; }
     // use with toggle in waybar (doens't restart if not running)
-    // MOD+ALT+W                           { spawn "killall" "-SIGUSR1" "waybar"; }
+    // MOD+ALT+W                        { spawn "killall" "-SIGUSR1" "waybar"; }
 }
 
 // Layout Settings
 layout {
-    gaps 0
-    center-focused-column "on-overflow"
+    gaps 8
+    center-focused-column "never"
     background-color "transparent"
+
+    border {
+      width 1
+      active-color "#D8DEE9"
+      inactive-color "#D8DEE9"
+    }
+
 
     preset-column-widths {
         proportion 0.33333
@@ -213,16 +221,29 @@ layout {
     }
 
     focus-ring {
-        width 0
-        active-color "#1E1E2E"
+        width 1
+        active-color "#D8DEE9"
+
+
     }
 
-    insert-hint {
+    shadow {
+      on
+      softness 2
+      spread 1
+      offset x=4 y=6
+      draw-behind-window true
+      color "#00000070"
+      // inactive-color "#00000054"
+    }
+
+    /* insert-hint {
         off
-        color "#1E1E2E"
+        color "#2E3440"
     }
 
     struts {}
+    */
 
 }
 
@@ -260,12 +281,15 @@ animations {
     }
 }
 
+
+
 // Window Rules
 // Application-specific rules
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
 }
+
 
 window-rule {
     match app-id=r#"firefox"#
@@ -301,7 +325,7 @@ window-rule {
 }
 
 window-rule {
-    match title=r#".*Sign in - Google Accounts — Mozilla Firefox"#
+    match title=r#".*Sign in - Google Accounts — zen-browser"#
     open-floating true
 }
 
@@ -360,17 +384,43 @@ window-rule {
     open-floating true
 }
 
+
+
 // Global window appearance
 window-rule {
-    geometry-corner-radius 0
+    //match is-active=true
+    geometry-corner-radius 1
     clip-to-geometry true
+    opacity 1.0
+    background-effect {
+        blur true
+    }
+
 }
 
 // Inactive window transparency
 window-rule {
     match is-active=false
-    opacity 0.9
+    geometry-corner-radius 1
+    clip-to-geometry true
+    opacity 1.0
+    background-effect {
+        blur true
+    }
+
+
 }
+
+window-rule {
+    match app-id="nvim"
+    opacity 0.98
+    clip-to-geometry true
+    background-effect {
+        blur true
+    }
+
+}
+
 
 // Environment Variables
 environment {
