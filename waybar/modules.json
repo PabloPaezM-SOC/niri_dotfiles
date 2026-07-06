@@ -62,7 +62,7 @@
     "interval": 1,
     "tooltip": true,
     "tooltip-format": "CPU Frequency: {avg_frequency} GHz",
-    "on-click": "alacritty -e btm"
+    "on-click": "kitty -e dgop"
   },
   "memory": {
     "format": "{icon}\n<span size='8pt'>{percentage}%</span>",
@@ -75,7 +75,9 @@
       "<span size='12pt'>⠿</span>"
     ],
     "interval": 3,
-    "tooltip": true
+    "tooltip": true,
+    "on-click": "kitty -e dgop"
+
   },
   "clock": {
     "interval": 1,
@@ -93,7 +95,8 @@
     "tooltip-format": "{title}"
   },
   "custom/menu": {
-    "format": "<span size='16pt'>──</span>",
+    "format": "<span size='12pt'>⌄</span>",
+    //──
     "tooltip": false,
     "persistent": true
   },
@@ -143,21 +146,21 @@
   "on-click-right": "nm-connection-editor",
   "tooltip": true,
   "max-length": 20
-},
+},*/
 "bluetooth": {
   "interval": 5,
-  "format-on": "<span size='14pt'>󰂯</span>",
-  "format-off": "<span size='14pt'>󰂲</span>",
-  "format-disabled": "<span size='14pt'>󰂲</span>",
-  "format-connected": "<span size='14pt'>󰂱</span>",
-  "format-no-controller": "span size='14pt'>󰂯</span>",
+  "format-on": "<span size='12pt'>󰂯</span>",
+  "format-off": "<span size='12pt'>󰂲</span>",
+  "format-disabled": "<span size='12pt'>󰂲</span>",
+  "format-connected": "<span size='12pt'>󰂱</span>",
+  "format-no-controller": "span size='12pt'>󰂯</span>",
   "tooltip": true,
   "tooltip-format": "{device_enumerate}",
   "tooltip-format-enumerate-connected": "{device_address}",
   "tooltip-format-enumerate-connected-battery": "{device_address} | Battery: {device_battery_percentage}%",
   "on-click": "rfkill toggle bluetooth",
   "on-click-right": "blueman-manager"
-},*/
+},
   "pulseaudio#microphone": {
     "format": "{format_source}",
     "format-source": "<span size='14pt'>󰍬</span>",

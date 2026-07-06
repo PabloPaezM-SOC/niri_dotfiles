@@ -9,8 +9,17 @@
 
 window#waybar {
   background: @background;
-  box-shadow: 2px 2px black;
-  border-right: 1px solid @colors1;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-right: 0.1px solid @colors1;
+}
+
+#waybar {
+  background: @background;
+  /* La sombra se dibujará dentro del padding de la ventana superior */
+  box-shadow: 4px 44px 10px rgba(0, 0, 0, 0.8);
+
 }
 
 #custom-cachy:hover,
