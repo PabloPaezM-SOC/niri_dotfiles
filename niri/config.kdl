@@ -22,7 +22,7 @@ input {
         }
     }
     //focus-follows-mouse
-    workspace-auto-back-and-forth
+    //workspace-auto-back-and-forth
 }
 
 gestures {
@@ -100,8 +100,8 @@ binds {
     //MOD+SHIFT+RIGHT                     { move-column-right; }
 
     // Move windows floating within workspace
-    MOD+SHIFT+LEFT    { move-column-left-or-to-monitor-left; }
-    MOD+SHIFT+RIGHT   { move-column-right-or-to-monitor-right; }
+    MOD+SHIFT+LEFT                      { move-column-left-or-to-monitor-left; }
+    MOD+SHIFT+RIGHT                     { move-column-right-or-to-monitor-right; }
 
 
 
@@ -150,26 +150,26 @@ binds {
     MOD+SHIFT+WHEELSCROLLLEFT           { move-column-left; }
 
     // Numbered Workspaces
-    MOD+1                               { focus-workspace "uno"; }
-    MOD+2                               { focus-workspace "dos"; }
-    MOD+3                               { focus-workspace "tres"; }
-    MOD+4                               { focus-workspace "cuatro"; }
-    MOD+5                               { focus-workspace "cinco"; }
-    MOD+6                               { focus-workspace "seis"; }
-    MOD+7                               { focus-workspace "siete"; }
-    MOD+8                               { focus-workspace "ocho"; }
-    MOD+9                               { focus-workspace "nueve"; }
+    MOD+1                               { focus-workspace 1; }
+    MOD+2                               { focus-workspace 2; }
+    MOD+3                               { focus-workspace 3; }
+    MOD+4                               { focus-workspace 4; }
+    MOD+5                               { focus-workspace 5; }
+    MOD+6                               { focus-workspace 6; }
+    MOD+7                               { focus-workspace 7; }
+    MOD+8                               { focus-workspace 8; }
+    MOD+9                               { focus-workspace 9; }
 
     // Move windows to numbered workspaces with MOD+SHIFT
-    MOD+SHIFT+1                         { move-column-to-workspace "uno"; }
-    MOD+SHIFT+2                         { move-column-to-workspace "dos"; }
-    MOD+SHIFT+3                         { move-column-to-workspace "tres"; }
-    MOD+SHIFT+4                         { move-column-to-workspace "cuatro"; }
-    MOD+SHIFT+5                         { move-column-to-workspace "cinco"; }
-    MOD+SHIFT+6                         { move-column-to-workspace "seis"; }
-    MOD+SHIFT+7                         { move-column-to-workspace "siete"; }
-    MOD+SHIFT+8                         { move-column-to-workspace "ocho"; }
-    MOD+SHIFT+9                         { move-column-to-workspace "nueve"; }
+    MOD+SHIFT+1                         { move-column-to-workspace 1; }
+    MOD+SHIFT+2                         { move-column-to-workspace 2; }
+    MOD+SHIFT+3                         { move-column-to-workspace 3; }
+    MOD+SHIFT+4                         { move-column-to-workspace 4; }
+    MOD+SHIFT+5                         { move-column-to-workspace 5; }
+    MOD+SHIFT+6                         { move-column-to-workspace 6; }
+    MOD+SHIFT+7                         { move-column-to-workspace 7; }
+    MOD+SHIFT+8                         { move-column-to-workspace 8; }
+    MOD+SHIFT+9                         { move-column-to-workspace 9; }
 
     //MOD+TAB                             { focus-workspace-previous; }
 
@@ -211,8 +211,8 @@ layout {
 
     border {
       width 1
-      active-color "#C1C1C1"
-      inactive-color "#C1C1C1"
+      active-color "#ACAEAC"
+      inactive-color "#ACAEAC"
     }
 
 
@@ -224,7 +224,7 @@ layout {
 
     focus-ring {
         width 1
-        active-color "#C1C1C1"
+        active-color "#ACAEAC"
 
 
     }
@@ -241,7 +241,7 @@ layout {
 
     /* insert-hint {
         off
-        color "#000000"
+        color "#050705"
     }
 
     struts {}
@@ -296,6 +296,7 @@ window-rule {
 window-rule {
     match app-id=r#"zen-browser"#
     match app-id=r#"obsidian$"#
+    match app-id=r#"kitty"#
     open-maximized true
 }
 
@@ -384,11 +385,21 @@ window-rule {
   open-floating true
 }
 
+window-rule {
+    match app-id="battle.net.exe"
+    match app-id="Battle.net.exe"
+    open-floating true
+}
+
+window-rule {
+    match app-id="(?i)battle.net.exe"
+    open-floating true
+}
 // Workspaces
 
 
-workspace "uno"
-workspace "dos"
+//workspace "uno"
+//workspace "dos"
 //workspace "5"
 //aworkspace "6"
 //workspace "7"
@@ -423,13 +434,12 @@ window-rule {
 window-rule {
   match app-id=r#"vesktop"#
   match app-id=r#"obsidian"#
-  open-on-workspace "dos"
+  open-on-workspace "1"
   open-maximized true
 }
 
 window-rule{
   match app-id=r#"zen"#
-  open-on-workspace "uno"
   open-maximized true
 }
 
