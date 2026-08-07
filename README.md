@@ -2,7 +2,7 @@
 
 <div align="center">
 
-**A productive and clean [Niri](https://github.com/YaLTeR/niri) configuration setup**  
+**A productive and clean [Niri](https://github.com/YaLTeR/niri) configuration setup**
 _Dynamic theming • Borderless layouts • Minimal_
 
 ---
@@ -28,7 +28,6 @@ _Dynamic theming • Borderless layouts • Minimal_
 ## Contents
 
 - [Features](#features)
-- [Automatic Installation](#automatic-installation-recommended)
 - [What Gets Installed](#what-gets-installed)
 - [Themes](#themes)
 - [Preconfigured Tools](#preconfigured-tools)
@@ -42,21 +41,6 @@ _Dynamic theming • Borderless layouts • Minimal_
   - [Layout Controls](#layout-controls)
   - [Window Modes](#window-modes)
   - [Utilities](#utilities)
-
-## Features
-
-- Clean borderless, gapless minimal look
-- Dynamic theme switching system-wide
-- Out-of-Box preconfigured for all popular themes and applications
-- Rust-powered tooling and packages (rust go brrr...)
-
-## Automatic Installation (Recommended)
-
-For Arch Linux and Arch-based distributions (Manjaro, EndeavourOS, etc.):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/saatvik333/niri-dotfiles/main/install.sh | sh
-```
 
 **Important Requirements:**
 
@@ -163,12 +147,9 @@ Thanks to [vinceliuice](https://github.com/vinceliuice) and [Fausto-Korpsvart](h
 ### Applications
 
 | Keybind              | Action                                           |
-| -------------------- | ------------------------------------------------ |
-| `MOD + Return`       | Open terminal (Alacritty)                        |
+| -------------------- | -------------------------------                  |
 | `MOD + Alt + Return` | Open terminal (Kitty)                            |
 | `MOD + B`            | Open primary browser (Firefox Developer Edition) |
-| `MOD + Alt + B`      | Open secondary browser (Google Chrome)           |
-| `MOD + A`            | Toggle application launcher (Vicinae)            |
 | `MOD + E`            | Open file manager (Thunar)                       |
 | `MOD + Alt + E`      | Open TUI file manager (Yazi)                     |
 | `MOD + W`            | Open wallpaper selector                          |
@@ -190,8 +171,6 @@ Thanks to [vinceliuice](https://github.com/vinceliuice) and [Fausto-Korpsvart](h
 | `XF86AudioPrev`         | Previous track             |
 
 > **Note:** All media keys work even when the screen is locked.
-
-### Window Management
 
 #### Focus Windows
 
@@ -283,8 +262,7 @@ Thanks to [vinceliuice](https://github.com/vinceliuice) and [Fausto-Korpsvart](h
 
 | Keybind   | Action                 |
 | --------- | ---------------------- |
-| `MOD + T` | Toggle window floating |
-| `MOD + F` | Toggle fullscreen      |
+| `MOD + F` | Toggle window floating       |
 | `MOD + M` | Maximize column        |
 
 ### Utilities

@@ -51,6 +51,7 @@ overview {
 
 layer-rule {
     match namespace="^awww-daemon$"
+    match namespace="^mpvpaper$"
     place-within-backdrop true
 }
 
@@ -63,7 +64,7 @@ binds {
     MOD+SHIFT+Q                         hotkey-overlay-title="Lock Screen: gtklock" { spawn-sh "gtklock"; }
     MOD+SPACE                           hotkey-overlay-title="Open App Launcher: vicinae" { spawn-sh "vicinae toggle"; }
     MOD+B                               hotkey-overlay-title="Open Browser: zen" { spawn-sh "zen-browser"; }
-    MOD+SHIFT+E                         hotkey-overlay-title="File Manager: Thunar" { spawn-sh "DISPLAY=:2 thunar"; }
+    MOD+SHIFT+E                         hotkey-overlay-title="File Manager: Thunar" { spawn-sh "DISPLAY=:1 thunar"; }
     MOD+E                               hotkey-overlay-title="File Manager: Yazi" { spawn-sh "kitty yazi"; }
     MOD+W                               hotkey-overlay-title="Open Wallpaper Selector" { spawn-sh "$HOME/.config/scripts/bgselector.sh"; }
 
@@ -211,8 +212,8 @@ layout {
 
     border {
       width 1
-      active-color "#ACAEAC"
-      inactive-color "#ACAEAC"
+      active-color "#EBDBB2"
+      inactive-color "#EBDBB2"
     }
 
 
@@ -224,7 +225,7 @@ layout {
 
     focus-ring {
         width 1
-        active-color "#ACAEAC"
+        active-color "#EBDBB2"
 
 
     }
@@ -241,7 +242,7 @@ layout {
 
     /* insert-hint {
         off
-        color "#050705"
+        color "#282828"
     }
 
     struts {}
