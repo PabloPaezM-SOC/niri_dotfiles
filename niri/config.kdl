@@ -3,7 +3,6 @@ spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 spawn-at-startup "awww-daemon"
 spawn-at-startup "waybar"
 spawn-at-startup "sh" "-c" "vicinae server &"
-spawn-at-startup "swaync"
 spawn-at-startup "xwayland-satellite"
 
 // General Settings
@@ -64,7 +63,7 @@ binds {
     MOD+SHIFT+Q                         hotkey-overlay-title="Lock Screen: gtklock" { spawn-sh "gtklock"; }
     MOD+SPACE                           hotkey-overlay-title="Open App Launcher: vicinae" { spawn-sh "vicinae toggle"; }
     MOD+B                               hotkey-overlay-title="Open Browser: zen" { spawn-sh "zen-browser"; }
-    MOD+SHIFT+E                         hotkey-overlay-title="File Manager: Thunar" { spawn-sh "DISPLAY=:1 thunar"; }
+    MOD+SHIFT+E                         hotkey-overlay-title="File Manager: nemo" { spawn-sh "nemo"; }
     MOD+E                               hotkey-overlay-title="File Manager: Yazi" { spawn-sh "kitty yazi"; }
     MOD+W                               hotkey-overlay-title="Open Wallpaper Selector" { spawn-sh "$HOME/.config/scripts/bgselector.sh"; }
 
@@ -212,8 +211,8 @@ layout {
 
     border {
       width 1
-      active-color "#EBDBB2"
-      inactive-color "#EBDBB2"
+      active-color "#CDD6F4"
+      inactive-color "#CDD6F4"
     }
 
 
@@ -225,7 +224,7 @@ layout {
 
     focus-ring {
         width 1
-        active-color "#EBDBB2"
+        active-color "#CDD6F4"
 
 
     }
@@ -242,7 +241,7 @@ layout {
 
     /* insert-hint {
         off
-        color "#282828"
+        color "#1E1E2E"
     }
 
     struts {}

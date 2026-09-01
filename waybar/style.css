@@ -24,6 +24,7 @@ window#waybar {
 
 #custom-cachy:hover,
 #cpu:hover,
+#memory:hover,
 #network:hover,
 #bluetooth:hover,
 #pulseaudio:hover,

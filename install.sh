@@ -7,12 +7,12 @@ IFS=$'\n\t'
 # CONFIGURATION
 # ==========================
 
-readonly REPO_URL="https://github.com/saatvik333/niri-dotfiles.git"
-readonly DOTDIR="${HOME}/.dotfiles-sevens"
+readonly REPO_URL="https://github.com/PabloPaezM-SOC/niri-dotfiles.git"
+readonly DOTDIR="${HOME}/.dotfiles-niri/"
 readonly CONFIG_DIR="${HOME}/.config"
 readonly BACKUP_DIR="${HOME}/.config_backup_$(date +%Y%m%d_%H%M%S)"
 readonly LOG_DIR="${HOME}/.cache"
-readonly LOG_FILE="${LOG_DIR}/sevens-dots-install-$(date +%Y%m%d_%H%M%S).log"
+readonly LOG_FILE="${LOG_DIR}/lele-dots-install-$(date +%Y%m%d_%H%M%S).log"
 
 # Temporary directory for builds (will be cleaned up)
 TEMP_BUILD_DIR=""
@@ -36,7 +36,7 @@ SUDO_PID=""
 
 # Expected configuration folders in the repo
 readonly CONFIG_FOLDERS=(
-  niri waybar fish zsh fastfetch mako alacritty kitty starship
+  niri waybar fish zsh fastfetch makokitty starship
   nvim yazi vicinae gtklock zathura wallust rofi scripts
 )
 
@@ -60,7 +60,7 @@ readonly AUR_PACKAGES=(
 
 # Official repository packages
 readonly PACMAN_PACKAGES=(
-  niri waybar fish fastfetch mako alacritty kitty starship neovim yazi
+  niri waybar fish fastfetch mako kitty starship neovim yazi
   zathura zathura-pdf-mupdf ttf-jetbrains-mono-nerd
   qt5-wayland qt6-wayland polkit-gnome ffmpeg imagemagick unzip jq
   gtklock rofi curl libnotify
@@ -86,7 +86,7 @@ readonly NC='\033[0m'
 log() {
   local timestamp
   timestamp="$(date +'%Y-%m-%d %H:%M:%S')"
-  printf "[%s] %s\n" "${timestamp}" "$*" >> "${LOG_FILE}" 2> /dev/null || true
+  printf "[%s] %s\n" "${timestamp}" "$*" >>"${LOG_FILE}" 2>/dev/null || true
 }
 
 msg() {
@@ -138,10 +138,10 @@ add_summary() {
 # ==========================
 
 usage() {
-  cat << EOF
+  cat <<EOF
 Usage: ${0##*/} [OPTIONS]
 
-Sevens-Dots Installer - Automated setup for Niri window manager configuration
+Lele-Dots Installer - Automated setup for Niri window manager configuration
 
 OPTIONS:
   -h, --help      Display this help message and exit
@@ -182,7 +182,7 @@ EOF
 }
 
 version() {
-  printf "Sevens-Dots Installer v2.1\n"
+  printf "Lele-Dots Installer v1.0\n"
   printf "Defensive Bash Refactored Edition\n"
 }
 
@@ -193,14 +193,14 @@ version() {
 cleanup_temp_files() {
   if [[ -n "${TEMP_BUILD_DIR}" ]] && [[ -d "${TEMP_BUILD_DIR}" ]]; then
     info "Cleaning up temporary build directory..."
-    rm -rf "${TEMP_BUILD_DIR}" 2> /dev/null || true
+    rm -rf "${TEMP_BUILD_DIR}" 2>/dev/null || true
   fi
 }
 
 cleanup_sudo_keepalive() {
-  if [[ -n "${SUDO_PID}" ]] && kill -0 "${SUDO_PID}" 2> /dev/null; then
-    kill "${SUDO_PID}" 2> /dev/null || true
-    wait "${SUDO_PID}" 2> /dev/null || true
+  if [[ -n "${SUDO_PID}" ]] && kill -0 "${SUDO_PID}" 2>/dev/null; then
+    kill "${SUDO_PID}" 2>/dev/null || true
+    wait "${SUDO_PID}" 2>/dev/null || true
   fi
 }
 
@@ -250,7 +250,7 @@ retry_command() {
 check_internet() {
   info "Checking internet connectivity..."
 
-  if ! command -v curl &> /dev/null; then
+  if ! command -v curl &>/dev/null; then
     warn "curl not found, will be installed with base tools"
     return 0
   fi
@@ -263,7 +263,7 @@ check_internet() {
   local connected=false
 
   for endpoint in "${endpoints[@]}"; do
-    if curl -s --connect-timeout 5 --max-time 10 "${endpoint}" > /dev/null 2>&1; then
+    if curl -s --connect-timeout 5 --max-time 10 "${endpoint}" >/dev/null 2>&1; then
       connected=true
       break
     fi
@@ -276,7 +276,7 @@ check_internet() {
   msg "Internet connection verified."
 
   info "Testing connection quality..."
-  if ! curl -s --connect-timeout 2 --max-time 5 https://archlinux.org > /dev/null 2>&1; then
+  if ! curl -s --connect-timeout 2 --max-time 5 https://archlinux.org >/dev/null 2>&1; then
     warn "Network connection appears slow. Installation may take longer than usual."
   fi
 }
@@ -284,7 +284,7 @@ check_internet() {
 check_arch_based() {
   info "Verifying Arch-based system..."
 
-  if ! command -v pacman &> /dev/null; then
+  if ! command -v pacman &>/dev/null; then
     fatal "This script requires pacman package manager (Arch-based distribution)."
   fi
 
@@ -320,7 +320,7 @@ check_disk_space() {
     printf "\n"
 
     local reply
-    read -r -p "Continue anyway? (y/N): " reply < /dev/tty
+    read -r -p "Continue anyway? (y/N): " reply </dev/tty
     printf "\n"
 
     if [[ ! "${reply}" =~ ^[Yy]$ ]]; then
@@ -363,7 +363,7 @@ check_optional_dependencies() {
 
   # Check for audio backend
   for pkg in "${OPTIONAL_AUDIO_PACKAGES[@]}"; do
-    if pacman -Qi "${pkg}" &> /dev/null; then
+    if pacman -Qi "${pkg}" &>/dev/null; then
       missing_audio=false
       break
     fi
@@ -371,7 +371,7 @@ check_optional_dependencies() {
 
   # Check for Bluetooth backend
   for pkg in "${OPTIONAL_BLUETOOTH_PACKAGES[@]}"; do
-    if pacman -Qi "${pkg}" &> /dev/null; then
+    if pacman -Qi "${pkg}" &>/dev/null; then
       missing_bluetooth=false
       break
     fi
@@ -409,7 +409,7 @@ check_optional_dependencies() {
     printf "\n"
 
     local reply
-    read -r -p "Continue installation without these optional dependencies? (Y/n): " reply < /dev/tty
+    read -r -p "Continue installation without these optional dependencies? (Y/n): " reply </dev/tty
     printf "\n"
 
     if [[ "${reply}" =~ ^[Nn]$ ]]; then
@@ -425,7 +425,7 @@ check_optional_dependencies() {
 
 verify_binary() {
   local binary="$1"
-  if ! command -v "${binary}" &> /dev/null; then
+  if ! command -v "${binary}" &>/dev/null; then
     error "Binary '${binary}' not found in PATH."
     return 1
   fi
@@ -454,7 +454,7 @@ create_backup() {
         ((++symlinks_found)) || true
         rm "${target}"
         info "Removed symlink: ${folder}"
-      elif cp -rL "${target}" "${BACKUP_DIR}/" 2> /dev/null; then
+      elif cp -rL "${target}" "${BACKUP_DIR}/" 2>/dev/null; then
         rm -rf "${target}"
         info "Backed up: ${folder}"
         ((++backed_up)) || true
@@ -477,7 +477,7 @@ create_backup() {
 }
 
 offer_restore() {
-  if [[ -d "${BACKUP_DIR}" ]] && [[ -n "$(ls -A "${BACKUP_DIR}" 2> /dev/null)" ]]; then
+  if [[ -d "${BACKUP_DIR}" ]] && [[ -n "$(ls -A "${BACKUP_DIR}" 2>/dev/null)" ]]; then
     printf "\n"
     warn "Installation encountered an error."
     printf "${YELLOW}Your previous configurations are backed up at:${NC}\n"
@@ -485,7 +485,7 @@ offer_restore() {
     printf "\n"
 
     local reply
-    read -r -p "Would you like to restore your backup now? (y/N): " reply < /dev/tty
+    read -r -p "Would you like to restore your backup now? (y/N): " reply </dev/tty
     printf "\n"
 
     if [[ "${reply}" =~ ^[Yy]$ ]]; then
@@ -516,7 +516,7 @@ restore_backup() {
 
 update_system() {
   info "Updating system packages..."
-  if sudo pacman -Syu --noconfirm >> "${LOG_FILE}" 2>&1; then
+  if sudo pacman -Syu --noconfirm >>"${LOG_FILE}" 2>&1; then
     msg "System updated successfully."
   else
     fatal "Failed to update system packages."
@@ -525,7 +525,7 @@ update_system() {
 
 install_base_tools() {
   info "Installing base development tools..."
-  if sudo pacman -S --needed --noconfirm git base-devel curl >> "${LOG_FILE}" 2>&1; then
+  if sudo pacman -S --needed --noconfirm git base-devel curl >>"${LOG_FILE}" 2>&1; then
     msg "Base tools installed."
   else
     fatal "Failed to install base development tools."
@@ -535,14 +535,14 @@ install_base_tools() {
 choose_aur_helper() {
   info "Checking for AUR helper..."
 
-  if command -v yay &> /dev/null; then
-    if yay --version &> /dev/null; then
+  if command -v yay &>/dev/null; then
+    if yay --version &>/dev/null; then
       AUR_HELPER="yay"
       msg "yay AUR helper detected and working."
       return 0
     else
       warn "yay is installed but broken (likely due to pacman/libalpm upgrade). Reinstalling..."
-      sudo pacman -Rns --noconfirm yay >> "${LOG_FILE}" 2>&1 || true
+      sudo pacman -Rns --noconfirm yay >>"${LOG_FILE}" 2>&1 || true
     fi
   fi
 
@@ -554,7 +554,7 @@ install_yay() {
   info "Installing yay AUR helper..."
 
   info "Attempting to install yay from official repository..."
-  if retry_command 2 sudo pacman -S --noconfirm yay >> "${LOG_FILE}" 2>&1; then
+  if retry_command 2 sudo pacman -S --noconfirm yay >>"${LOG_FILE}" 2>&1; then
     msg "yay installed from official repository."
     return 0
   fi
@@ -567,12 +567,12 @@ install_yay() {
   fi
 
   info "Cloning yay repository (this may take a moment)..."
-  if ! retry_command 3 git clone --depth=1 https://aur.archlinux.org/yay-bin.git "${TEMP_BUILD_DIR}" >> "${LOG_FILE}" 2>&1; then
+  if ! retry_command 3 git clone --depth=1 https://aur.archlinux.org/yay-bin.git "${TEMP_BUILD_DIR}" >>"${LOG_FILE}" 2>&1; then
     fatal "Failed to clone yay repository after multiple attempts."
   fi
 
   info "Building yay package (this may take a few minutes)..."
-  if ! (cd "${TEMP_BUILD_DIR}" && makepkg -si --noconfirm >> "${LOG_FILE}" 2>&1); then
+  if ! (cd "${TEMP_BUILD_DIR}" && makepkg -si --noconfirm >>"${LOG_FILE}" 2>&1); then
     fatal "Failed to build and install yay."
   fi
 
@@ -588,10 +588,10 @@ install_yay() {
 }
 
 check_yay_linkage() {
-  if command -v yay &> /dev/null; then
+  if command -v yay &>/dev/null; then
     if ldd "$(command -v yay)" | grep -q "not found"; then
       warn "Detected broken shared library linkage in yay. Reinstalling."
-      sudo pacman -Rns --noconfirm yay-bin >> "${LOG_FILE}" 2>&1 || true
+      sudo pacman -Rns --noconfirm yay-bin >>"${LOG_FILE}" 2>&1 || true
       install_yay
     fi
   fi
@@ -612,9 +612,9 @@ cargo_fix() {
   info "Checking Rust toolchain configuration..."
 
   # Check if rustup is installed
-  if ! command -v rustup &> /dev/null; then
+  if ! command -v rustup &>/dev/null; then
     info "rustup not found, installing..."
-    if sudo pacman -S --needed --noconfirm rustup >> "${LOG_FILE}" 2>&1; then
+    if sudo pacman -S --needed --noconfirm rustup >>"${LOG_FILE}" 2>&1; then
       msg "rustup installed successfully."
     else
       warn "Failed to install rustup. Some AUR packages may fail to build."
@@ -624,7 +624,7 @@ cargo_fix() {
 
   # Set default toolchain to stable
   info "Setting Rust default toolchain to stable..."
-  if rustup default stable >> "${LOG_FILE}" 2>&1; then
+  if rustup default stable >>"${LOG_FILE}" 2>&1; then
     msg "Rust toolchain configured: stable (default)"
   else
     warn "Failed to set default Rust toolchain. Some AUR packages may fail to build."
@@ -672,21 +672,21 @@ install_colloid_theme() {
   info "Installing Colloid GTK theme..."
   info "Cloning Colloid theme repository (this may take a moment)..."
 
-  if ! retry_command 3 git clone --depth=1 https://github.com/vinceliuice/Colloid-gtk-theme "${theme_dir}" >> "${LOG_FILE}" 2>&1; then
+  if ! retry_command 3 git clone --depth=1 https://github.com/vinceliuice/Colloid-gtk-theme "${theme_dir}" >>"${LOG_FILE}" 2>&1; then
     rm -rf "${theme_dir}"
     warn "Failed to clone Colloid theme repository after multiple attempts."
     return 1
   fi
 
   info "Installing Colloid theme variants..."
-  if ! (cd "${theme_dir}" && ./install.sh --libadwaita --tweaks all rimless >> "${LOG_FILE}" 2>&1); then
+  if ! (cd "${theme_dir}" && ./install.sh --libadwaita --tweaks all rimless >>"${LOG_FILE}" 2>&1); then
     rm -rf "${theme_dir}"
     warn "Failed to install Colloid theme (default variant)."
     return 1
   fi
 
   info "Installing Colloid theme (grey-black variant)..."
-  if ! (cd "${theme_dir}" && ./install.sh --libadwaita --theme grey --tweaks black rimless >> "${LOG_FILE}" 2>&1); then
+  if ! (cd "${theme_dir}" && ./install.sh --libadwaita --theme grey --tweaks black rimless >>"${LOG_FILE}" 2>&1); then
     rm -rf "${theme_dir}"
     warn "Failed to install Colloid theme (grey-black variant)."
     return 1
@@ -722,14 +722,14 @@ install_rosepine_theme() {
   info "Installing Rose Pine GTK theme..."
   info "Cloning Rose Pine theme repository (this may take a moment)..."
 
-  if ! retry_command 3 git clone --depth=1 https://github.com/Fausto-Korpsvart/Rose-Pine-GTK-Theme "${theme_dir}" >> "${LOG_FILE}" 2>&1; then
+  if ! retry_command 3 git clone --depth=1 https://github.com/Fausto-Korpsvart/Rose-Pine-GTK-Theme "${theme_dir}" >>"${LOG_FILE}" 2>&1; then
     rm -rf "${theme_dir}"
     warn "Failed to clone Rose Pine theme repository after multiple attempts."
     return 1
   fi
 
   info "Installing Rose Pine theme with moon variant..."
-  if ! (cd "${theme_dir}/themes" && ./install.sh --libadwaita --tweaks moon macos >> "${LOG_FILE}" 2>&1); then
+  if ! (cd "${theme_dir}/themes" && ./install.sh --libadwaita --tweaks moon macos >>"${LOG_FILE}" 2>&1); then
     rm -rf "${theme_dir}"
     warn "Failed to install Rose Pine theme."
     return 1
@@ -765,14 +765,14 @@ install_osaka_theme() {
   info "Installing Osaka GTK theme..."
   info "Cloning Osaka theme repository (this may take a moment)..."
 
-  if ! retry_command 3 git clone --depth=1 https://github.com/Fausto-Korpsvart/Osaka-GTK-Theme "${theme_dir}" >> "${LOG_FILE}" 2>&1; then
+  if ! retry_command 3 git clone --depth=1 https://github.com/Fausto-Korpsvart/Osaka-GTK-Theme "${theme_dir}" >>"${LOG_FILE}" 2>&1; then
     rm -rf "${theme_dir}"
     warn "Failed to clone Osaka theme repository after multiple attempts."
     return 1
   fi
 
   info "Installing Osaka theme with solarized variant..."
-  if ! (cd "${theme_dir}/themes" && ./install.sh --libadwaita --tweaks solarized macos >> "${LOG_FILE}" 2>&1); then
+  if ! (cd "${theme_dir}/themes" && ./install.sh --libadwaita --tweaks solarized macos >>"${LOG_FILE}" 2>&1); then
     rm -rf "${theme_dir}"
     warn "Failed to install Osaka theme."
     return 1
@@ -812,7 +812,10 @@ install_gtk_themes() {
   fi
 
   if [[ ${#installed_themes[@]} -gt 0 ]]; then
-    msg "Successfully installed ${#installed_themes[@]} GTK theme(s): $(IFS=' ' ; echo "${installed_themes[*]}")"
+    msg "Successfully installed ${#installed_themes[@]} GTK theme(s): $(
+      IFS=' '
+      echo "${installed_themes[*]}"
+    )"
   fi
 
   if [[ ${#failed_themes[@]} -gt 0 ]]; then
@@ -847,7 +850,7 @@ install_colloid_icons() {
   info "Installing Colloid icon theme..."
   info "Cloning Colloid icon theme repository (this may take a moment)..."
 
-  if ! retry_command 3 git clone --depth=1 https://github.com/vinceliuice/Colloid-icon-theme "${icons_dir}" >> "${LOG_FILE}" 2>&1; then
+  if ! retry_command 3 git clone --depth=1 https://github.com/vinceliuice/Colloid-icon-theme "${icons_dir}" >>"${LOG_FILE}" 2>&1; then
     rm -rf "${icons_dir}"
     warn "Failed to clone Colloid icon theme repository after multiple attempts."
     return 1
@@ -855,7 +858,7 @@ install_colloid_icons() {
 
   info "Installing Colloid icon theme with all schemes (bold)..."
   # -d ensures we install to ~/.icons and do NOT trigger a hidden sudo prompt
-  if ! (cd "${icons_dir}" && ./install.sh -d "${HOME}/.icons" --scheme all --bold >> "${LOG_FILE}" 2>&1); then
+  if ! (cd "${icons_dir}" && ./install.sh -d "${HOME}/.icons" --scheme all --bold >>"${LOG_FILE}" 2>&1); then
     rm -rf "${icons_dir}"
     warn "Failed to install Colloid icon theme."
     return 1
@@ -940,32 +943,32 @@ configure_shells() {
   printf "\n"
 
   local reply
-  read -r -p "Enter your choice (1-4) [default: 3]: " reply < /dev/tty
+  read -r -p "Enter your choice (1-4) [default: 3]: " reply </dev/tty
   printf "\n"
 
   case "${reply}" in
-    1)
-      CONFIGURE_FISH=true
-      CONFIGURE_ZSH=false
-      msg "Selected: Fish shell configuration"
-      ;;
-    2)
-      CONFIGURE_FISH=false
-      CONFIGURE_ZSH=true
-      msg "Selected: Zsh shell configuration"
-      ;;
-    4)
-      CONFIGURE_FISH=false
-      CONFIGURE_ZSH=false
-      msg "Selected: No shell configuration"
-      info "Skipping shell setup. You can configure shells manually later."
-      return 0
-      ;;
-    *)
-      CONFIGURE_FISH=true
-      CONFIGURE_ZSH=true
-      msg "Selected: Both Fish and Zsh configurations"
-      ;;
+  1)
+    CONFIGURE_FISH=true
+    CONFIGURE_ZSH=false
+    msg "Selected: Fish shell configuration"
+    ;;
+  2)
+    CONFIGURE_FISH=false
+    CONFIGURE_ZSH=true
+    msg "Selected: Zsh shell configuration"
+    ;;
+  4)
+    CONFIGURE_FISH=false
+    CONFIGURE_ZSH=false
+    msg "Selected: No shell configuration"
+    info "Skipping shell setup. You can configure shells manually later."
+    return 0
+    ;;
+  *)
+    CONFIGURE_FISH=true
+    CONFIGURE_ZSH=true
+    msg "Selected: Both Fish and Zsh configurations"
+    ;;
   esac
 
   local shells_to_install=()
@@ -980,7 +983,7 @@ configure_shells() {
 
   if [[ ${#shells_to_install[@]} -gt 0 ]]; then
     info "Installing selected shell(s): ${shells_to_install[*]}"
-    if sudo pacman -S --needed --noconfirm "${shells_to_install[@]}" >> "${LOG_FILE}" 2>&1; then
+    if sudo pacman -S --needed --noconfirm "${shells_to_install[@]}" >>"${LOG_FILE}" 2>&1; then
       msg "Shell(s) installed successfully."
     else
       warn "Failed to install some shells. They may already be installed."
@@ -1008,7 +1011,7 @@ configure_shells() {
     fi
 
     # Create .zshrc with just the source command and skip wizard magic
-    cat > "${zshrc}" << EOF
+    cat >"${zshrc}" <<EOF
 # Source sevens-dots configuration
 source \${HOME}/.config/zsh/config.zsh
 
@@ -1058,7 +1061,7 @@ set_default_shell() {
   printf "\n"
 
   local reply
-  read -r -p "Enter your choice (1-${max_option}) [default: 1]: " reply < /dev/tty
+  read -r -p "Enter your choice (1-${max_option}) [default: 1]: " reply </dev/tty
   printf "\n"
 
   if [[ -z "${reply}" ]] || [[ "${reply}" == "1" ]]; then
@@ -1083,7 +1086,7 @@ set_default_shell() {
   if [[ -z "${selected_shell}" ]]; then
     warn "${shell_name} is not installed. Installing it now..."
 
-    if sudo pacman -S --needed --noconfirm "${shell_name}" >> "${LOG_FILE}" 2>&1; then
+    if sudo pacman -S --needed --noconfirm "${shell_name}" >>"${LOG_FILE}" 2>&1; then
       selected_shell="$(command -v "${shell_name}")"
       if [[ -z "${selected_shell}" ]]; then
         error "Failed to locate ${shell_name} after installation."
@@ -1103,9 +1106,9 @@ set_default_shell() {
 
   info "Changing default shell to ${shell_name}..."
 
-  if ! grep -q "^${selected_shell}\$" /etc/shells 2> /dev/null; then
+  if ! grep -q "^${selected_shell}\$" /etc/shells 2>/dev/null; then
     info "Adding ${shell_name} to /etc/shells..."
-    printf "%s\n" "${selected_shell}" | sudo tee -a /etc/shells >> "${LOG_FILE}" 2>&1
+    printf "%s\n" "${selected_shell}" | sudo tee -a /etc/shells >>"${LOG_FILE}" 2>&1
   fi
 
   if chsh -s "${selected_shell}"; then
@@ -1124,7 +1127,7 @@ set_default_shell() {
 clone_or_update_dotfiles() {
   if [[ -d "${DOTDIR}/.git" ]]; then
     msg "Dotfiles directory exists. Updating..."
-    if ! retry_command 3 git -C "${DOTDIR}" pull --rebase >> "${LOG_FILE}" 2>&1; then
+    if ! retry_command 3 git -C "${DOTDIR}" pull --rebase >>"${LOG_FILE}" 2>&1; then
       warn "Failed to update dotfiles after retries. Removing and re-cloning..."
       rm -rf "${DOTDIR}"
       clone_dotfiles
@@ -1140,7 +1143,7 @@ clone_or_update_dotfiles() {
   fi
 
   info "Updating git submodules..."
-  if retry_command 3 git -C "${DOTDIR}" submodule update --init --recursive >> "${LOG_FILE}" 2>&1; then
+  if retry_command 3 git -C "${DOTDIR}" submodule update --init --recursive >>"${LOG_FILE}" 2>&1; then
     msg "Submodules updated."
   else
     warn "Failed to update submodules after retries. Continuing anyway..."
@@ -1149,7 +1152,7 @@ clone_or_update_dotfiles() {
 
 clone_dotfiles() {
   info "Cloning dotfiles repository (this may take a moment)..."
-  if ! retry_command 3 git clone --depth=1 "${REPO_URL}" "${DOTDIR}" >> "${LOG_FILE}" 2>&1; then
+  if ! retry_command 3 git clone --depth=1 "${REPO_URL}" "${DOTDIR}" >>"${LOG_FILE}" 2>&1; then
     fatal "Failed to clone dotfiles repository after multiple attempts. Check your internet connection."
   fi
 
@@ -1198,7 +1201,7 @@ create_symlinks() {
         rm -rf "${target}"
       fi
 
-      if ln -s "${DOTDIR}/${folder}" "${target}" 2>> "${LOG_FILE}"; then
+      if ln -s "${DOTDIR}/${folder}" "${target}" 2>>"${LOG_FILE}"; then
         info "Linked: ${folder}"
         ((++linked)) || true
       else
@@ -1224,7 +1227,7 @@ install_wallpapers() {
     shopt -u nullglob
 
     if [[ ${#wallpapers[@]} -gt 0 ]]; then
-      if cp -r "${DOTDIR}/wallpapers/"* "${wallpaper_dir}/" 2> /dev/null; then
+      if cp -r "${DOTDIR}/wallpapers/"* "${wallpaper_dir}/" 2>/dev/null; then
         msg "Wallpapers installed to: ${wallpaper_dir}"
       else
         warn "Failed to copy wallpapers."
@@ -1255,14 +1258,14 @@ create_systemd_services() {
   mkdir -p "${service_dir}"
   create_gtklock_service "${service_dir}"
 
-  systemctl --user daemon-reload >> "${LOG_FILE}" 2>&1 || warn "Failed to reload systemd daemon."
-   
+  systemctl --user daemon-reload >>"${LOG_FILE}" 2>&1 || warn "Failed to reload systemd daemon."
+
   printf "\n"
   info "gtklock service has been created but NOT enabled by default."
   info "To manually lock your screen: systemctl --user start gtklock"
   info "To enable autostart on login: systemctl --user enable gtklock"
   printf "\n"
-   
+
   msg "Systemd services configured."
 }
 
@@ -1277,7 +1280,7 @@ create_gtklock_service() {
   local gtklock_bin
   gtklock_bin="$(command -v gtklock)"
 
-  cat > "${service_dir}/gtklock.service" << EOF
+  cat >"${service_dir}/gtklock.service" <<EOF
 [Unit]
 Description=GTKLock Screen Locker
 Documentation=man:gtklock(1)
@@ -1299,10 +1302,10 @@ EOF
 print_header() {
   printf "\n"
   printf "${GREEN}${BOLD}"
-  cat << "EOF"
+  cat <<"EOF"
 ════════════════════════════════════════════════════════════
-  SEVENS-DOTS - Installation Script v2.1
-  Automated setup for your Niri window manager configuration
+  LELE-DOTS - Installation Script v1.0
+  Automated setup for your Niri window manager configuration(BETA)
 ════════════════════════════════════════════════════════════
 EOF
   printf "${NC}"
@@ -1315,10 +1318,10 @@ EOF
 print_summary() {
   separator
   printf "${GREEN}${BOLD}"
-  cat << "EOF"
+  cat <<"EOF"
 ════════════════════════════════════════════════════════════
   INSTALLATION COMPLETED SUCCESSFULLY!
-  Your sevens-dots configuration has been installed
+  Your Simple and fresh filedots configuration has been installed
 ════════════════════════════════════════════════════════════
 EOF
   printf "${NC}\n"
@@ -1344,14 +1347,14 @@ EOF
   printf "  • gtklock can be triggered manually or via idle timeout\n"
   printf "\n"
 
-  if [[ -d "${BACKUP_DIR}" ]] && [[ -n "$(ls -A "${BACKUP_DIR}" 2> /dev/null)" ]]; then
+  if [[ -d "${BACKUP_DIR}" ]] && [[ -n "$(ls -A "${BACKUP_DIR}" 2>/dev/null)" ]]; then
     printf "${YELLOW}${BOLD}Backup Information:${NC}\n"
     printf "  Your previous configurations are backed up at:\n"
     printf "  ${CYAN}%s${NC}\n" "${BACKUP_DIR}"
     printf "\n"
 
     local reply
-    read -r -p "Would you like to remove the backup directory? (y/N): " reply < /dev/tty
+    read -r -p "Would you like to remove the backup directory? (y/N): " reply </dev/tty
     printf "\n"
 
     if [[ "${reply}" =~ ^[Yy]$ ]]; then
@@ -1470,19 +1473,19 @@ main() {
 parse_arguments() {
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      -h | --help)
-        usage
-        exit 0
-        ;;
-      -v | --version)
-        version
-        exit 0
-        ;;
-      *)
-        error "Unknown option: $1"
-        usage
-        exit 1
-        ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    -v | --version)
+      version
+      exit 0
+      ;;
+    *)
+      error "Unknown option: $1"
+      usage
+      exit 1
+      ;;
     esac
     shift
   done

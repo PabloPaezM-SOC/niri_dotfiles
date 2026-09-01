@@ -9,7 +9,7 @@
   "margin-right": 0,
   "spacing": 0,
   "include": ["~/.config/waybar/modules.json"],
-  "modules-left": [/*"custom/cachy",*/ "clock", "cpu","memory"],
+  "modules-left": ["custom/cachy", "clock", "cpu","memory"],
   "modules-center": ["mpris", "niri/workspaces", "privacy"],
   "modules-right": [
     //"tray",
@@ -21,7 +21,7 @@
     "bluetooth",
     "group/brightness",
     "battery",
-    "custom/swaync",
+    //"custom/swaync",
     "custom/powermenu"
   ]
 }

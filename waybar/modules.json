@@ -38,8 +38,7 @@
   "custom/cachy": {
     "format": "",
     "tooltip": false,
-    "on-click": "alacritty",
-    "on-click-right": "kitty"
+    "on-click": "kitty"
   },
   "niri/workspaces": {
     "on-click": "activate",
@@ -50,14 +49,14 @@
     }
   },
   "cpu": {
-    "format": "{icon}\n<span size='8pt'>{usage}%</span>",
+    "format": "{icon}\n<span size='8pt'> {usage}% </span>",
     "format-icons": [
-      "<span size='12pt'>⠁</span>",
-      "<span size='12pt'>⠉</span>",
-      "<span size='12pt'>⠙</span>",
-      "<span size='12pt'>⠛</span>",
-      "<span size='12pt'>⠟</span>",
-      "<span size='12pt'>⠿</span>"
+      " <span size='8pt'>⠁</span> ",
+      " <span size='8pt'>⠉</span> ",
+      " <span size='8pt'>⠙</span> ",
+      " <span size='8pt'>⠛</span> ",
+      " <span size='8pt'>⠟</span> ",
+      " <span size='8pt'>⠿</span> "
     ],
     "interval": 1,
     "tooltip": true,
@@ -65,16 +64,16 @@
     "on-click": "kitty -e dgop"
   },
   "memory": {
-    "format": "{icon}\n<span size='8pt'>{percentage}%</span>",
+    "format": "{icon}\n<span size='8pt'> {percentage}% </span>",
     "format-icons": [
-      "<span size='12pt'>⠁</span>",
-      "<span size='12pt'>⠃</span>",
-      "<span size='12pt'>⠇</span>",
-      "<span size='12pt'>⠧</span>",
-      "<span size='12pt'>⠷</span>",
-      "<span size='12pt'>⠿</span>"
+      " <span size='8pt'>⠁</span> ",
+      " <span size='8pt'>⠃</span> ",
+      " <span size='8pt'>⠇</span> ",
+      " <span size='8pt'>⠧</span> ",
+      " <span size='8pt'>⠷</span> ",
+      " <span size='8pt'>⠿</span> "
     ],
-    "interval": 3,
+    "interval": 1,
     "tooltip": true,
     "on-click": "kitty -e dgop"
 
