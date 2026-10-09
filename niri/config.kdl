@@ -3,7 +3,8 @@ spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 spawn-at-startup "awww-daemon"
 spawn-at-startup "waybar"
 spawn-at-startup "sh" "-c" "vicinae server &"
-spawn-at-startup "xwayland-satellite"
+spawn-at-startup "xwayland-satellite" ":1"
+spawn-at-startup "/home/nacho/.local/bin/niri-tema.sh"
 
 // General Settings
 prefer-no-csd
@@ -11,6 +12,10 @@ screenshot-path "~/Imágenes/Screenshots/%Y-%m-%d %H-%M-%S.png"
 output "eDP-1" {
     mode "1920x1080@60.024"
     scale 1
+}
+
+debug {
+    disable-direct-scanout
 }
 
 input {
@@ -385,6 +390,11 @@ window-rule {
   open-floating true
 }
 
+window-rule{
+  match app-id=r#"^steam_app_"#
+  default-column-width { proportion 1.0;}
+}
+
 window-rule {
     match app-id="battle.net.exe"
     match app-id="Battle.net.exe"
@@ -453,7 +463,7 @@ window-rule {
 
 // Environment Variables
 environment {
-    DISPLAY null
+    DISPLAY ":1"
     ELECTRON_OZONE_PLATFORM_HINT "auto"
     XDG_SESSION_TYPE "wayland"
     XDG_CURRENT_DESKTOP "niri"
