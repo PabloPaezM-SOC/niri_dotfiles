@@ -1,46 +1,18 @@
-# Niri WM Dotfiles
+# Niri WM Dotfiles from 
 
-<div align="center">
 
-**A productive and clean [Niri](https://github.com/YaLTeR/niri) configuration setup**
-_Dynamic theming • Borderless layouts • Minimal_
 
----
-
-### Gallery
-
-<table>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/b9221fe9-6e8f-4e26-b2a4-a67170512824" alt="Desktop View"/></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/c1184029-71d6-49a7-abb1-57661f738bad" alt="Workspace View"/></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/fba3cdae-5bbf-497c-b9f8-0cbd11c64d49" alt="Application Launcher"/></td>
-  </tr>
-</table>
+**A clean [Niri]configuration setup**
+_Dynamic theming/MP4 • Borderless layouts • Minimal _
 
 ---
 
-</div>
+
+![[Pasted image 20261012065651.png]]
+
 
 ## Contents
 
-- [Features](#features)
-- [What Gets Installed](#what-gets-installed)
-- [Themes](#themes)
-- [Preconfigured Tools](#preconfigured-tools)
-- [Keybinds](#keybinds)
-  - [System & Shortcuts](#system--shortcuts)
-  - [Applications](#applications)
-  - [Media Controls](#media-controls)
-  - [Window Management](#window-management)
-  - [Workspace Management](#workspace-management)
-  - [Monitor Management](#monitor-management)
-  - [Layout Controls](#layout-controls)
-  - [Window Modes](#window-modes)
-  - [Utilities](#utilities)
 
 **Important Requirements:**
 
