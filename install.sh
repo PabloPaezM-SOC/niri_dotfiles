@@ -7,7 +7,7 @@ IFS=$'\n\t'
 # CONFIGURATION
 # ==========================
 
-readonly REPO_URL="https://github.com/PabloPaezM-SOC/niri-dotfiles.git"
+readonly REPO_URL="https://github.com/PabloPaezM-SOC/niri_dotfiles.git"
 readonly DOTDIR="${HOME}/.dotfiles-niri/"
 readonly CONFIG_DIR="${HOME}/.config"
 readonly BACKUP_DIR="${HOME}/.config_backup_$(date +%Y%m%d_%H%M%S)"

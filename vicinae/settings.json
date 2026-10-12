@@ -10,6 +10,8 @@
 
 {
    "$schema": "https://vicinae.com/schemas/config.json",
+   "close_on_focus_loss": true,
+   "escape_key_behavior": "close_window",
    "theme": {
       "light": {
          "name": "wallust"
@@ -18,11 +20,27 @@
          "name": "wallust"
       }
    },
+   "telemetry": {
+      "system_info": false
+   },
    "favorites": [],
    "providers": {
       "clipboard": {
          "entrypoints": {
             "history": {
+               "enabled": false
+            }
+         }
+      },
+      "core": {
+         "entrypoints": {
+            "report-bug": {
+               "enabled": false
+            },
+            "search-tray": {
+               "enabled": false
+            },
+            "sponsor": {
                "enabled": false
             }
          }
