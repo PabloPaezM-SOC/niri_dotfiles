@@ -216,8 +216,8 @@ layout {
 
     border {
       width 1
-      active-color "#BFC7BE"
-      inactive-color "#BFC7BE"
+      active-color "#D3C6AA"
+      inactive-color "#D3C6AA"
     }
 
 
@@ -229,7 +229,7 @@ layout {
 
     focus-ring {
         width 1
-        active-color "#BFC7BE"
+        active-color "#D3C6AA"
 
 
     }
@@ -246,7 +246,7 @@ layout {
 
     /* insert-hint {
         off
-        color "#0D3634"
+        color "#2D353B"
     }
 
     struts {}
@@ -291,7 +291,11 @@ animations {
 
 
 // Window Rules
+//
+//
 // Application-specific rules
+
+
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
@@ -416,12 +420,15 @@ window-rule {
 //workspace "8"
 //workspace "9"
 
+
+
+
 // Global window appearance
 window-rule {
     //match is-active=true
     geometry-corner-radius 1
     clip-to-geometry true
-    opacity 1.0
+    opacity 0.9
     background-effect {
         blur true
     }

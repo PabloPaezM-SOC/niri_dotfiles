@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -uo pipefail
-
+export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
 sleep 0.8 # let awww set the wallpaper
 
 # Source common utilities if available
@@ -293,13 +293,18 @@ map_to_wallust_theme() {
 # --- Functions ---
 
 detect_theme_from_wallpaper() {
+  local input_path="$1"
   log_info "Detecting theme from current wallpaper directory"
 
   local wallpaper_path
-  wallpaper_path=$(awww query 2>/dev/null | grep -oP '(?<=image: ).*' | head -n1 | tr -d '\n\r')
-
-  if [[ -z "$wallpaper_path" ]]; then
-    die "No wallpaper detected from awww query"
+  if [[ -n "$input_path" && -f "$input_path" ]]; then
+    wallpaper_path="$input_path"
+    log_debug "Using provided wallpaper path: $wallpaper_path"
+  else
+    wallpaper_path=$(awww query 2>/dev/null | grep -oP '(?<=image: ).*' | head -n1 | tr -d '\n\r')
+    if [[ -z "$wallpaper_path" ]]; then
+      die "No wallpaper detected from awww query"
+    fi
   fi
 
   if [[ ! -f "$wallpaper_path" ]]; then
@@ -330,6 +335,30 @@ detect_theme_from_wallpaper() {
   DETECTED_THEME="$theme_name"
 
   export WALLPAPER_PATH WALLPAPER_VARIATION
+}
+
+apply_wallpaper() {
+  local -r wallpaper_path="$1"
+  local ext="${wallpaper_path##*.}"
+  ext=$(echo "$ext" | tr '[:upper:]' '[:lower:]')
+
+  if [[ "$ext" == "mp4" || "$ext" == "mkv" || "$ext" == "webm" ]]; then
+    log_info "Setting live wallpaper using mpvpaper"
+    # Matar instancias previas para evitar superposición
+    pkill -f mpvpaper 2>/dev/null
+    # Se ejecuta en segundo plano para Wayland (Niri)
+    mpvpaper -o "no-audio loop --hwdec=auto --panscan=1.0" '*' "$wallpaper_path" &
+  else
+    log_info "Setting static wallpaper using awww"
+    # Detener mpvpaper si veníamos de un video
+    pkill -f mpvpaper 2>/dev/null
+    awww img "$wallpaper_path" \
+      --transition-type random \
+      --transition-pos center \
+      --transition-duration 2 \
+      --transition-fps 60 \
+      >/dev/null 2>&1 || true
+  fi
 }
 
 check_theme_changed() {
@@ -575,24 +604,32 @@ set_icon_theme() {
 run_wallust_theme() {
   local -r wallust_theme="$1"
   local -r wallpaper_path="$2"
+  local target_path="$wallpaper_path"
 
-  log_info "Running wallust with theme: $wallust_theme for wallpaper: $wallpaper_path"
+  local ext="${wallpaper_path##*.}"
+  ext=$(echo "$ext" | tr '[:upper:]' '[:lower:]')
+
+  # Si es video, extrae un fotograma para que wallust analice los colores
+  if [[ "$ext" == "mp4" || "$ext" == "mkv" || "$ext" == "webm" ]]; then
+    target_path="/tmp/wallust_frame.jpg"
+    log_info "Extracting frame from video for wallust: $wallpaper_path"
+    ffmpeg -y -ss 00:00:00.100 -i "$wallpaper_path" -vframes 1 "$target_path" >/dev/null 2>&1
+  fi
+
+  log_info "Running wallust with theme: $wallust_theme for wallpaper: $target_path"
 
   if [[ "$wallust_theme" == "random" ]]; then
-    # Just run wallust on the wallpaper without a specific theme if unknown
-    log_info "Running wallust in auto mode for: $wallpaper_path"
-    if ! wallust run "$wallpaper_path" --dynamic-threshold 2>/dev/null; then
+    log_info "Running wallust in auto mode for: $target_path"
+    if ! wallust run "$target_path" --dynamic-threshold 2>/dev/null; then
       log_warn "Wallust theme generation failed, continuing..."
     else
       log_success "Wallust theme generation completed"
     fi
   else
-    # Try to apply the specific theme if available
     log_info "Applying specific wallust theme: $wallust_theme"
     if ! wallust theme "$wallust_theme" 2>/dev/null; then
-      log_warn "Specific wallust theme failed, falling back to auto-generation for: $wallpaper_path"
-      # Fallback to running wallust on the wallpaper directly
-      if ! wallust run "$wallpaper_path" --dynamic-threshold 2>/dev/null; then
+      log_warn "Specific wallust theme failed, falling back to auto-generation for: $target_path"
+      if ! wallust run "$target_path" --dynamic-threshold 2>/dev/null; then
         log_warn "Wallust generation failed completely, continuing..."
       else
         log_success "Wallust fallback theme generation completed"
@@ -637,6 +674,23 @@ update_niri_config() {
   log_success "Niri config updated successfully"
 }
 
+update_bspwm_config() {
+  local -r wallust_colors_file="$HOME/.cache/wallust/colors.json"
+
+  if [[ ! -f "$wallust_colors_file" ]]; then
+    return
+  fi
+
+  # Extraer el color principal (por ejemplo color4 o foreground)
+  local border_color=$(jq -r '.colors.color4' "$wallust_colors_file")
+
+  # Si bspwm está activo, cambiar el color del borde enfocado en tiempo real
+  if pgrep -x "bspwm" >/dev/null; then
+    bspc config focused_border_color "$border_color"
+    log_success "bspwm border color updated to: $border_color"
+  fi
+}
+
 update_vscode_theme() {
   local -r vscode_settings_file="$HOME/.config/Code/User/settings.json"
   local theme
@@ -663,13 +717,15 @@ update_vscode_theme() {
 }
 
 main() {
+  # CAMBIO 1: Aceptar la ruta del wallpaper como argumento $1 (para cuando lo uses desde tu menú)
+  local input_wallpaper="${1:-}"
   log_info "Starting dynamic theme synchronization"
 
-  # Validate dependencies
-  validate_dependencies "awww" "wallust" "jq" "sed" "grep" "head" "tr"
+  # CAMBIO 2: Agregar ffmpeg y mpvpaper a las dependencias a validar
+  validate_dependencies "awww" "wallust" "jq" "sed" "grep" "head" "tr" "ffmpeg" "mpvpaper"
 
-  # Detect theme from current wallpaper
-  detect_theme_from_wallpaper
+  # CAMBIO 3: Pasar la variable $input_wallpaper a la función que detecta el tema
+  detect_theme_from_wallpaper "$input_wallpaper"
 
   local detected_theme="${DETECTED_THEME:-}"
   local wallpaper_path="${WALLPAPER_PATH:-}"
@@ -689,6 +745,11 @@ main() {
 
   log_info "Detected theme: $detected_theme, variation: $wallpaper_variation"
 
+  # CAMBIO 4: Si pasaste un wallpaper desde tu menú, aplicar el fondo visualmente AQUÍ
+  if [[ -n "$input_wallpaper" ]]; then
+    apply_wallpaper "$wallpaper_path"
+  fi
+
   # Check if theme/variation changed
   local theme_changed=0
   if check_theme_changed "$detected_theme" "$wallpaper_variation"; then
@@ -707,11 +768,18 @@ main() {
 
   # Only apply themes if theme/variation changed
   if [[ $theme_changed -eq 1 ]]; then
+
+    # Asegurarnos de que el fondo se aplica si el script corrió solo y el tema cambió
+    if [[ -z "$input_wallpaper" ]]; then
+      apply_wallpaper "$wallpaper_path"
+    fi
+
     set_gtk_theme "$gtk_theme" "$wallpaper_variation" "$icon_theme"
     set_icon_theme "$icon_theme"
     run_wallust_theme "$wallust_theme" "$wallpaper_path"
     update_niri_config
     update_vscode_theme
+    update_vesktop_theme
 
     if command -v vicinae >/dev/null 2>&1; then
       vicinae theme set wallust || log_warn "Failed to set vicinae theme"

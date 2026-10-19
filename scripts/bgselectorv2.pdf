@@ -1,0 +1,66 @@
+
+# --- Functions ---
+
+detect_theme_from_wallpaper() {
+  log_info "Detecting theme from current wallpaper directory"
+
+  local wallpaper_path
+  wallpaper_path=$(awww query 2>/dev/null | grep -oP '(?<=image: ).*' | head -n1 | tr -d '\n\r')
+
+  if [[ -z "$wallpaper_path" ]]; then
+    die "No wallpaper detected from awww query"
+  fi
+
+  if [[ ! -f "$wallpaper_path" ]]; then
+    die "Wallpaper file does not exist: $wallpaper_path"
+  fi
+
+  log_debug "Found wallpaper: $wallpaper_path"
+
+  local theme_dir
+  theme_dir=$(dirname "$wallpaper_path")
+  local parent_dir
+  parent_dir=$(dirname "$theme_dir")
+
+  local theme_name
+  theme_name=$(basename "$parent_dir" | tr '[:upper:]' '[:lower:]')
+
+  local variation
+  variation=$(basename "$theme_dir" | tr '[:upper:]' '[:lower:]')
+
+  if [[ "$theme_name" == "osaka" ]]; then
+    theme_name="solarized"
+  fi
+
+  log_debug "Detected theme: $theme_name, variation: $variation"
+
+  WALLPAPER_PATH="$wallpaper_path"
+  WALLPAPER_VARIATION="$variation"
+  DETECTED_THEME="$theme_name"
+
+  export WALLPAPER_PATH WALLPAPER_VARIATION
+}
+
+check_theme_changed() {
+  local -r current_theme="$1"
+  local -r current_variation="$2"
+
+  # Create cache directory if it doesn't exist
+  mkdir -p "$(dirname "$THEME_STATE_FILE")"
+
+  if [[ ! -f "$THEME_STATE_FILE" ]]; then
+    log_info "No previous theme state found, this is first run or cache was cleared"
+    return 0 # Theme changed (first run)
+  fi
+
+  local previous_theme previous_variation
+  read -r previous_theme previous_variation <"$THEME_STATE_FILE"
+
+  if [[ "$current_theme" == "$previous_theme" && "$current_variation" == "$previous_variation" ]]; then
+    log_info "Theme unchanged: $current_theme ($current_variation)"
+    return 1 # Theme did not change
+  else
+    log_info "Theme changed: $previous_theme ($previous_variation) → $current_theme ($current_variation)"
+    return 0 # Theme changed
+  fi
+}

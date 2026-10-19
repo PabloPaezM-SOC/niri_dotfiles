@@ -86,7 +86,7 @@ configuration {
 }
 
 window {
-    background-color: rgba(0,0,0,1);   // slightly stronger backdrop
+    background-color: rgba(0,0,0,0.5);   // slightly stronger backdrop
     fullscreen: true;
     border: 0px;
     separator: none;
@@ -96,21 +96,21 @@ mainbox {
     children: [listview];
     spacing: 0px;
     border: 0px;
-    separator: none;
-    padding: 0% 5%;                      // use horizontal padding only
+    // separator: none;
+    padding: 5% 0%;                      // use horizontal padding only
     expand: true;                        // makes listview fill available height
     orientation: vertical;
-    valign: 0.5;                         // center vertically
+    //valign: 1;                         // center vertically
 }
 
 listview {
-    padding: 20px;
-    spacing: 12px;                       // slightly looser spacing between thumbs
+    padding: 10px 290px 10px 400px;
+    spacing: 32px;                       // slightly looser spacing between thumbs
     columns: 6;
-    lines: 2;
+    lines: 3;
     flow: horizontal;
     fixed-height: true;
-    scrollbar: true;
+    scrollbar: false;
     cycle: true;
     border: 0px;
     separator: none;
@@ -120,25 +120,49 @@ listview {
 }
 
 element {
-    border-radius: 0px;                  // subtle rounded corners
+    border: 1px solid;
+    border-color: transparent;
+    border-radius: 16px;                  // subtle rounded corners
     children: [element-icon];
-    background-color: #000000;
-    padding: 0px;
+    background-color: rgba(0,0,0, 0.55);
+    padding: 2px;
     margin: 0px;
 }
 
-element.selected {
+/*element.selected {
     border: 2px solid;
     border-color: #ffffff;
-    border-radius: 0px;
+    border-radius: 16px;
     background-color: rgba(255,255,255,0.05);  // soft highlight behind selection
+}*/
+
+element normal.normal,
+element alternate.normal,
+element normal.active,
+element alternate.active,
+element normal.urgent,
+element alternate.urgent {
+    background-color: rgba(10, 20, 25, 0.55);
+    border-color: transparent;
+    padding: 18px;
+}
+
+element selected.normal,
+element selected.active,
+element selected.urgent {
+    background-color: rgba(244, 166, 184, 0.18);
+    border: 2px solid;
+    border-color: #f4a6b8;
+    border-radius: 16px;
+    padding: 3px;
 }
 
 element-icon {
-    size: 250px 400px;                   // slightly refined proportions
+  size: 180px 280px;                   // slightly refined proportions
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    background-color: #000000;
+    background-color: transparent;
+    border-radius: 12px;
     expand: true;
-    scale: "fit";
+    scale: "both";
 }
