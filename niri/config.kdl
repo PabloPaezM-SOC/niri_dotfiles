@@ -29,6 +29,7 @@ input {
     //workspace-auto-back-and-forth
 }
 
+
 gestures {
   hot-corners {
     off
@@ -36,14 +37,15 @@ gestures {
 }
 
 
-
 hotkey-overlay {
     skip-at-startup
 }
 
 cursor {
-    hide-when-typing
-    hide-after-inactive-ms 5000
+  xcursor-theme "breeze_cursors"
+  xcursor-size 28
+  hide-when-typing
+  hide-after-inactive-ms 5000
 }
 
 overview {
@@ -216,8 +218,8 @@ layout {
 
     border {
       width 1
-      active-color "#D3C6AA"
-      inactive-color "#D3C6AA"
+      active-color "#3C3836"
+      inactive-color "#3C3836"
     }
 
 
@@ -229,7 +231,7 @@ layout {
 
     focus-ring {
         width 1
-        active-color "#D3C6AA"
+        active-color "#3C3836"
 
 
     }
@@ -246,7 +248,7 @@ layout {
 
     /* insert-hint {
         off
-        color "#2D353B"
+        color "#FBF1C7"
     }
 
     struts {}

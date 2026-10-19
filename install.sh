@@ -63,7 +63,7 @@ readonly PACMAN_PACKAGES=(
   niri waybar fish fastfetch mako kitty starship neovim yazi
   zathura zathura-pdf-mupdf ttf-jetbrains-mono-nerd
   qt5-wayland qt6-wayland polkit-gnome ffmpeg imagemagick unzip jq
-  gtklock rofi curl libnotify
+  gtklock rofi curl libnotify wlogout mpv mpvpaper
 )
 
 # ==========================
