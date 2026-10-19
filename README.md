@@ -10,8 +10,9 @@ _Dynamic theming/MP4 • Borderless layouts • Minimal _
 
 script install
 
+```
 curl -fsSL https://raw.githubusercontent.com/pablopaezm-soc/niri_dotfiles/main/install.sh | sh
-
+```
 
 ## Contents
 
