@@ -1,4 +1,4 @@
-# Niri WM Dotfiles from 
+# Niri WM Dotfiles from
 
 
 
@@ -8,7 +8,9 @@ _Dynamic theming/MP4 • Borderless layouts • Minimal _
 ---
 
 
-![[Pasted image 20261012065651.png]]
+script install
+
+curl -fsSL https://raw.githubusercontent.com/pablopaezm-soc/niri_dotfiles/main/install.sh | sh
 
 
 ## Contents
