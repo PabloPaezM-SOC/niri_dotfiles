@@ -21,7 +21,7 @@ done
 ### Key Bindings  ####
 ######################
 # Enable vim bindings
-bindkey -v
+bindkey -e
 
 # Zsh-specific settings
 HISTFILE=~/.histfile
@@ -153,6 +153,34 @@ alias du='dust'
 # Zsh-specific aliases
 alias zshconfig='$EDITOR ~/.config/zsh/config.zsh'
 
-# Zsh-specific plugins
-# source $HOME/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-# source $HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+##################
+### Completado ###
+##################
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+setopt SHARE_HISTORY
+setopt AUTO_CD
+
+##################
+### Plugins    ###
+##################
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source <(fzf --zsh)
+eval "$(zoxide init zsh)"
+
+# Syntax highlighting: siempre lo último
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Flechas: búsqueda por prefijo
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+for m in emacs viins vicmd; do
+  bindkey -M $m '^[[A' up-line-or-beginning-search
+  bindkey -M $m '^[OA' up-line-or-beginning-search
+  bindkey -M $m '^[[B' down-line-or-beginning-search
+  bindkey -M $m '^[OB' down-line-or-beginning-search
+done
