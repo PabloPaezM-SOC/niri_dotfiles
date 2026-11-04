@@ -93,3 +93,5 @@ Notion/
 *.env
 *.swp.*
 temp.md
+*.swp
+*.swo
