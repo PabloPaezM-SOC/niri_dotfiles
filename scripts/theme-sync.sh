@@ -597,7 +597,6 @@ set_icon_theme() {
   gsettings set org.gnome.desktop.interface icon-theme "$icon_theme" || {
     log_warn "Failed to set icon theme, gsettings may not be available"
   }
-
   log_success "Icon theme set to: $icon_theme"
 }
 
@@ -767,7 +766,7 @@ main() {
   wallust_theme=$(map_to_wallust_theme "$detected_theme" "$wallpaper_variation")
 
   # Only apply themes if theme/variation changed
-  if [[ $theme_changed -eq 1 ]]; then
+  if [[ $theme_changed -eq 1 || "$wallust_theme" == "random" ]]; then
 
     # Asegurarnos de que el fondo se aplica si el script corrió solo y el tema cambió
     if [[ -z "$input_wallpaper" ]]; then
@@ -791,6 +790,12 @@ main() {
       makoctl reload 2>/dev/null || log_warn "Failed to reload mako"
     else
       log_warn "makoctl not available, skipping notification daemon reload"
+    fi
+
+    # Recargar wlogout si está abierto
+    if pgrep -x wlogout >/dev/null; then
+      pkill -x wlogout
+      setsid wlogout -p layer-shell -b 3 -c 0 -r 0 -L 420 -R 420 -T 330 -B 330 >/dev/null 2>&1 &
     fi
 
     save_theme_state "$detected_theme" "$wallpaper_variation"

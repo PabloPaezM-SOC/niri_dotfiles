@@ -240,7 +240,7 @@
   },
   "custom/powermenu": {
     "format": "<span size='13pt'>󰐥</span>",
-    "on-click": "wlogout",
+    "on-click": "pkill wlogout || wlogout -p layer-shell -b 3 -c 0 -r 0 -L 420 -R 420 -T 330 -B 330",
     "tooltip": false
   },
   "custom/swaync": {
@@ -253,3 +253,6 @@
 
 
 }
+
+
+
