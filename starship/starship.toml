@@ -17,7 +17,7 @@ $line_break\
 $character
 """
 
-add_newline = false
+add_newline = true
 
 # Directory configuration
 [directory]
@@ -29,13 +29,14 @@ home_symbol = "~"
 
 # Character at prompt
 [character]
-success_symbol = "[](bold green)"
-error_symbol = "[](bold red)"
+success_symbol = "[>](bold green)"
+error_symbol = "[](bold #CC241D)"
 vimcmd_symbol ="[](bold green)"
 
 # Username display
 [username]
-format = "[Leleh@]($style)"
+style_user = "bold green"
+format = "[WiwiOS@]($style_user)"
 disabled = false
 show_always = true
 
