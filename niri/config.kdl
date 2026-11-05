@@ -218,8 +218,8 @@ layout {
 
     border {
       width 1
-      active-color "#C1C1C1"
-      inactive-color "#C1C1C1"
+      active-color "#383838"
+      inactive-color "#383838"
     }
 
 
@@ -231,7 +231,7 @@ layout {
 
     focus-ring {
         width 1
-        active-color "#C1C1C1"
+        active-color "#383838"
 
 
     }
@@ -248,7 +248,7 @@ layout {
 
     /* insert-hint {
         off
-        color "#000000"
+        color "#F8F8F8"
     }
 
     struts {}
@@ -427,10 +427,10 @@ window-rule {
 
 // Global window appearance
 window-rule {
-    //match is-active=true
+    match is-active=true
     geometry-corner-radius 1
     clip-to-geometry true
-    opacity 0.9
+    opacity 0.95
     background-effect {
         blur true
     }
@@ -442,7 +442,7 @@ window-rule {
     match is-active=false
     geometry-corner-radius 1
     clip-to-geometry true
-    opacity 1.0
+    opacity 0.95
     background-effect {
         blur true
     }
