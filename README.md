@@ -16,6 +16,18 @@ curl -fsSL https://raw.githubusercontent.com/pablopaezm-soc/niri_dotfiles/main/i
 
 ## Contents
 
+**Images:**
+
+```
+<img width="1920" height="1080" alt="2026-11-04 22-43-30" src="https://github.com/user-attachments/assets/8e478cb7-0c6e-4de8-b1da-773670183f44" />
+
+<img width="1920" height="1080" alt="2026-11-04 22-22-38" src="https://github.com/user-attachments/assets/d70295fb-2c6d-4f49-a805-0df855f14aa5" />
+
+<img width="1920" height="1080" alt="imagen" src="https://github.com/user-attachments/assets/4ec93979-04e9-4239-bbda-fc1de85db910" />
+
+<img width="1920" height="1080" alt="imagen" src="https://github.com/user-attachments/assets/db6090ac-425a-4920-81c3-570c551df52d" />
+
+```
 
 **Important Requirements:**
 
