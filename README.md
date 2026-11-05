@@ -18,16 +18,14 @@ curl -fsSL https://raw.githubusercontent.com/pablopaezm-soc/niri_dotfiles/main/i
 
 **Images:**
 
-```
-<img width="1920" height="1080" alt="2026-11-04 22-43-30" src="https://github.com/user-attachments/assets/8e478cb7-0c6e-4de8-b1da-773670183f44" />
+<img width="1920" height="1080" alt="2026-11-04 22-43-30" src="https://github.com/user-attachments/assets/e5eedbef-6450-4754-8d6e-b334ee352d8d" />
+<img width="1920" height="1080" alt="2026-11-04 22-22-38" src="https://github.com/user-attachments/assets/72b73216-be05-4105-bb43-6a99f59bfd76" />
+<img width="1920" height="1080" alt="2026-11-04 22-47-19" src="https://github.com/user-attachments/assets/27af8126-f9ad-4667-b361-47f51c97b041" />
+<img width="1920" height="1080" alt="2026-11-04 22-46-13" src="https://github.com/user-attachments/assets/ad1a79b0-877a-4786-bd6e-afce8dc23f7c" />
+<img width="1920" height="1080" alt="imagen" src="https://github.com/user-attachments/assets/45f71e75-d65f-419f-8629-654d080a319e" />
 
-<img width="1920" height="1080" alt="2026-11-04 22-22-38" src="https://github.com/user-attachments/assets/d70295fb-2c6d-4f49-a805-0df855f14aa5" />
 
-<img width="1920" height="1080" alt="imagen" src="https://github.com/user-attachments/assets/4ec93979-04e9-4239-bbda-fc1de85db910" />
 
-<img width="1920" height="1080" alt="imagen" src="https://github.com/user-attachments/assets/db6090ac-425a-4920-81c3-570c551df52d" />
-
-```
 
 **Important Requirements:**
 
@@ -72,7 +70,7 @@ Core Components
     Notification Daemon: Mako
     Application Launcher: Rofi
     Screen Locker: GTKLock
-    Wallpaper Manager: awww
+    Wallpaper Manager: awww / mvpaper
 
 Additional Tools
 
@@ -120,6 +118,8 @@ Thanks to [vinceliuice](https://github.com/vinceliuice) and [Fausto-Korpsvart](h
 - Alacritty
 - Kitty
 - Starship
+- wlogout
+- mpvpaper
 
 ## Keybinds
 
