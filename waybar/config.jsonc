@@ -18,9 +18,9 @@
     //"network",
     //"pulseaudio#microphone",
     "group/audio",
-    "bluetooth",
-    "group/brightness",
-    "battery",
+    //"bluetooth",
+    //"group/brightness",
+    //"battery",
     //"custom/swaync",
     "custom/powermenu"
   ]

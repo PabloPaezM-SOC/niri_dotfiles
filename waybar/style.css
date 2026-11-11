@@ -9,7 +9,7 @@
 
 window#waybar {
   background: @background;
-  padding-right: 20px;
+  padding-right: 0px;
   padding-top: 5px;
   padding-bottom: 5px;
   border-right: 0.1px solid @colors1;
@@ -53,11 +53,13 @@ window#waybar {
 #custom-powermenu {
   color: @foreground;
   padding: 6px 0;
+  min-width: 38px;
 }
 
 #workspaces button {
   color: @foreground;
-  padding: 0;
+  padding: 0 12px;
+  min-width: 0px;
 }
 #workspaces button.active {
   color: @color2;

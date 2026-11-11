@@ -218,8 +218,8 @@ layout {
 
     border {
       width 1
-      active-color "#383838"
-      inactive-color "#383838"
+      active-color "#CDD6F4"
+      inactive-color "#CDD6F4"
     }
 
 
@@ -231,7 +231,7 @@ layout {
 
     focus-ring {
         width 1
-        active-color "#383838"
+        active-color "#CDD6F4"
 
 
     }
@@ -248,7 +248,7 @@ layout {
 
     /* insert-hint {
         off
-        color "#F8F8F8"
+        color "#1E1E2E"
     }
 
     struts {}
